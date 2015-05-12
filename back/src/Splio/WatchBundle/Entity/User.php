@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(
  *     name="user",
  *     uniqueConstraints={
- *         @ORM\UniqueConstraint(name="nickname_idx", columns={"nickname"})
+ *         @ORM\UniqueConstraint(name="email_idx", columns={"email"})
  *     }
  * )
  * @ORM\Entity(repositoryClass="Splio\WatchBundle\Entity\UserRepository")
@@ -31,28 +31,48 @@ class User
      *
      * @ORM\Column(type="string")
      */
-    private $nickname;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $isSpecialUser = false;
-
-    /**
-     * @var DateTime
-     *
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $birthday;
+    private $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(name="encrypted_password", type="string")
      */
-    private $firstname;
+    private $encryptedPassword;
+
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="connected_at", type="datetime", nullable=true)
+     */
+    private $connectedAt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="public_key", type="string", nullable=true)
+     */
+    private $publicKey;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="secret_key", type="string", nullable=true)
+     */
+    private $secretKey;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Link", mappedBy="user")
+     */
+    private $links;
 
     /**
      * @var ArrayCollection
@@ -73,6 +93,7 @@ class User
     {
         $this->followers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->followings = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->links = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -83,98 +104,6 @@ class User
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set nickname
-     *
-     * @param string $nickname
-     * @return User
-     */
-    public function setNickname($nickname)
-    {
-        $this->nickname = $nickname;
-
-        return $this;
-    }
-
-    /**
-     * Get nickname
-     *
-     * @return string
-     */
-    public function getNickname()
-    {
-        return $this->nickname;
-    }
-
-    /**
-     * Set isSpecialUser
-     *
-     * @param boolean $isSpecialUser
-     * @return User
-     */
-    public function setIsSpecialUser($isSpecialUser)
-    {
-        $this->isSpecialUser = $isSpecialUser;
-
-        return $this;
-    }
-
-    /**
-     * Get isSpecialUser
-     *
-     * @return boolean
-     */
-    public function getIsSpecialUser()
-    {
-        return $this->isSpecialUser;
-    }
-
-    /**
-     * Set birthday
-     *
-     * @param \DateTime $birthday
-     * @return User
-     */
-    public function setBirthday($birthday)
-    {
-        $this->birthday = $birthday;
-
-        return $this;
-    }
-
-    /**
-     * Get birthday
-     *
-     * @return \DateTime
-     */
-    public function getBirthday()
-    {
-        return $this->birthday;
-    }
-
-    /**
-     * Set firstname
-     *
-     * @param string $firstname
-     * @return User
-     */
-    public function setFirstname($firstname)
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    /**
-     * Get firstname
-     *
-     * @return string
-     */
-    public function getFirstname()
-    {
-        return $this->firstname;
     }
 
     /**
@@ -241,5 +170,178 @@ class User
     public function getFollowings()
     {
         return $this->followings;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set encryptedPassword
+     *
+     * @param string $encryptedPassword
+     * @return User
+     */
+    public function setEncryptedPassword($encryptedPassword)
+    {
+        $this->encryptedPassword = $encryptedPassword;
+
+        return $this;
+    }
+
+    /**
+     * Get encryptedPassword
+     *
+     * @return string
+     */
+    public function getEncryptedPassword()
+    {
+        return $this->encryptedPassword;
+    }
+
+
+
+    /**
+     * Set createdAt
+     *
+     * @param \dateTime $createdAt
+     * @return User
+     */
+    public function setCreatedAt(\dateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \dateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set connectedAt
+     *
+     * @param \dateTime $connectedAt
+     * @return User
+     */
+    public function setConnectedAt(\dateTime $connectedAt)
+    {
+        $this->connectedAt = $connectedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get connectedAt
+     *
+     * @return \dateTime
+     */
+    public function getConnectedAt()
+    {
+        return $this->connectedAt;
+    }
+
+    /**
+     * Set publicKey
+     *
+     * @param string $publicKey
+     * @return User
+     */
+    public function setPublicKey($publicKey)
+    {
+        $this->publicKey = $publicKey;
+
+        return $this;
+    }
+
+    /**
+     * Get publicKey
+     *
+     * @return string
+     */
+    public function getPublicKey()
+    {
+        return $this->publicKey;
+    }
+
+    /**
+     * Set secretKey
+     *
+     * @param string $secretKey
+     * @return User
+     */
+    public function setSecretKey($secretKey)
+    {
+        $this->secretKey = $secretKey;
+
+        return $this;
+    }
+
+    /**
+     * Get secretKey
+     *
+     * @return string
+     */
+    public function getSecretKey()
+    {
+        return $this->secretKey;
+    }
+
+    /**
+     * Add links
+     *
+     * @param \Splio\WatchBundle\Entity\Link $links
+     * @return User
+     */
+    public function addLink(\Splio\WatchBundle\Entity\Link $links)
+    {
+        $this->links[] = $links;
+
+        return $this;
+    }
+
+    /**
+     * Remove links
+     *
+     * @param \Splio\WatchBundle\Entity\Link $links
+     */
+    public function removeLink(\Splio\WatchBundle\Entity\Link $links)
+    {
+        $this->links->removeElement($links);
+    }
+
+    /**
+     * Get links
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLinks()
+    {
+        return $this->links;
     }
 }
