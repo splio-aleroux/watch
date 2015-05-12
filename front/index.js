@@ -1,3 +1,8 @@
 var dispatcher = require('./dispatcher');
+var CommentBox = require('./components/CommentBox.jsx');
 
-dispatcher.test();
+console.log(CommentBox)
+// React.render(
+// //   <CommentBox />,
+// //   document.getElementById('content')
+// // );
