@@ -28,13 +28,13 @@ var LocalStorageService = {
         if (this.hasLocalStorage) {
             return this.getItem(identifier);
         }
-    }
+    },
 
     setValues: function(identifier, values) {
         if (this.hasLocalStorage) {
             this.setItem(identifier, values)
         }
-    }
+    },
 
     clear: function(identifier) {
         if (this.localStorage) {
