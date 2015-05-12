@@ -1,0 +1,3 @@
+splio_authentication_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: SplioAuthenticationBundle:Default:index }
