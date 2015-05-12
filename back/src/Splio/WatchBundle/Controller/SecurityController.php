@@ -79,6 +79,8 @@ class SecurityController extends RestController
 
         $user = $userResponse->json();
         if (!($user = $this->userRepository->findOneBy(['email' => $user['email']]))) {
+            var_dump($user);
+            die;
             $userPayload = [
                 'email' => $user['email'],
                 'publicKey' => substr(sha1(rand(0, time()).microtime(true)), -12, 12),
