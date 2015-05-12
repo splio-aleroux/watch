@@ -6,6 +6,11 @@ splio_rest:
     resource: "@SplioRestBundle/Resources/config/routing.yml"
     prefix:   /
 
+splio_rest_controller:
+    resource:   "@SplioRestBundle/Controller"
+    type:       annotation
+    prefix:   /rest
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

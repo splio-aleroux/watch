@@ -1,3 +1,4 @@
-splio_rest_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: SplioRestBundle:Default:index }
+home:
+    path:   /
+    defaults:
+        _controller: base_controller:indexAction
