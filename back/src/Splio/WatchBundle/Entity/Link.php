@@ -36,6 +36,13 @@ class Link
     private $url;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Tag", mappedBy="links")
+     */
+    private $tags;
+
+    /**
      * Get id
      *
      * @return integer
@@ -89,5 +96,45 @@ class Link
     public function getUrl()
     {
         return $this->url;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add tags
+     *
+     * @param \Splio\WatchBundle\Entity\Tag $tags
+     * @return Link
+     */
+    public function addTag(\Splio\WatchBundle\Entity\Tag $tags)
+    {
+        $this->tags[] = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Remove tags
+     *
+     * @param \Splio\WatchBundle\Entity\Tag $tags
+     */
+    public function removeTag(\Splio\WatchBundle\Entity\Tag $tags)
+    {
+        $this->tags->removeElement($tags);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

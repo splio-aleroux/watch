@@ -36,6 +36,13 @@ class Link
     private $url;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Tag", mappedBy="links")
+     */
+    private $tags;
+
+    /**
      * Get id
      *
      * @return integer
