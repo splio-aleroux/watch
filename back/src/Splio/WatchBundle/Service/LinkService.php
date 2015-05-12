@@ -18,12 +18,7 @@ class LinkService
 
     public function getTags(Link $link, $offset = 0, $limit= 10)
     {
-        $tags = $this->tagRepository->findBy(
-            ['links' => $link],
-            ['createdAt' => 'DESC'],
-            $limit,
-            $offset
-        );
+        $tags = $this->tagRepository->findTagsOfLink($link, $offset = 0, $limit = 10);
 
         return $tags;
     }

@@ -18,6 +18,15 @@ services:
     link_service:
         alias: splio_watch.link_service
 
+    splio_watch.tag_service:
+        class: Splio\WatchBundle\Service\TagService
+        arguments: []
+        calls:
+            - [setLinkRepository, ["@link_repository"]]
+
+    link_service:
+        alias: splio_watch.link_service
+
     splio_watch.link_repository:
         class: Splio\WatchBundle\Entity\LinkRepository
         factory_service: doctrine.orm.default_entity_manager
