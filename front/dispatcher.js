@@ -1,10 +1,10 @@
-var flux = require('flux');
-var objectAssign = require('object-assign');
+var Flux = require('flux');
+var ObjectAssign = require('object-assign');
 
-var dispatcher = objectAssign(flux.Dispatcher, {
+var Dispatcher = ObjectAssign(Flux.Dispatcher, {
     test: function() {
         console.log("test");
     }
 });
 
-module.exports = dispatcher;
+module.exports = Dispatcher;
