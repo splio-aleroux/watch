@@ -22,6 +22,7 @@ class UserController extends RestController
      *         "_method": "POST"
      *     }
      * )
+     * Type("Splio\WatchBundle\Type\UserCreateType")
      */
     public function createAction(Request $request)
     {
@@ -32,7 +33,6 @@ class UserController extends RestController
         $errors = $this->validator->validate($creation);
         if (0 === $errors->count()) {
             // call the service
-            var_dump($creation);
             return $this->renderJson(1);
         } else {
             $results = ["errors" => []];
