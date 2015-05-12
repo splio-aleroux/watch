@@ -71,9 +71,9 @@ class User implements UserInterface
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Link", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Link", mappedBy="user", cascade={"persist"})
      */
-    private $links;
+    protected $links;
 
     /**
      * @var ArrayCollection
@@ -338,6 +338,7 @@ class User implements UserInterface
     {
         return $this->secretKey;
     }
+
 
     /**
      * Add links

@@ -23,10 +23,9 @@ class Link
 
     /**
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="links")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="links", cascade={"persist"})
      */
-    private $user;
+    protected $user;
 
     /**
      * @var string
@@ -131,7 +130,7 @@ class Link
     /**
      * Get tags
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTags()
     {
