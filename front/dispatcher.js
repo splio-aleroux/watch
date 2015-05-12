@@ -7,6 +7,4 @@ var dispatcher = objectAssign(flux.Dispatcher, {
     }
 });
 
-console.log(dispatcher);
-
 module.exports = dispatcher;
