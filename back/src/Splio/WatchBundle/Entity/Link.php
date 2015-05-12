@@ -22,6 +22,13 @@ class Link
     private $id;
 
     /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $createdAt;
+
+    /**
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="links", cascade={"persist"})
      */
@@ -135,5 +142,28 @@ class Link
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Link
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 }

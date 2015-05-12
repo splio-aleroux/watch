@@ -22,6 +22,13 @@ class Tag
     private $id;
 
     /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $createdAt;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string")
@@ -32,7 +39,6 @@ class Tag
      * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Link", inversedBy="tags")
-     * @ORM\JoinTable(name="tags_links")
      */
     private $links;
 
@@ -69,7 +75,7 @@ class Tag
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -102,10 +108,33 @@ class Tag
     /**
      * Get links
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getLinks()
     {
         return $this->links;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Tag
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 }

@@ -6,54 +6,31 @@ use Splio\WatchBundle\Entity\Link;
 use Splio\WatchBundle\Entity\User;
 use Splio\WatchBundle\Entity\Tag;
 use Symfony\Component\HttpFoundation\Response;
-use Splio\WatchBundle\Entity\LinkRepository;
+use Splio\WatchBundle\Entity\TagRepository;
 
 class LinkService
 {
     /**
-     * @var LinkRepository
+     * @var TagRepository
      */
-    protected $linkRepository;
+    protected $tagRepository;
 
-    /**
-     * [getByUser description]
-     * @param  User    $user   [description]
-     * @param  integer $offset [description]
-     * @param  integer $limit  [description]
-     * @return [type]          [description]
-     */
-    public function getByUser(User $user, $offset = 0, $limit= 10)
-    {
-        $links = $this->linkRepository->findBy(
-            ['user' => $user],
-            null,
-            $limit,
-            $offset
-        );
-        return $links;
-    }
 
-    /**
-     * [getByTag description]
-     * @param  Tag     $tag    [description]
-     * @param  integer $offset [description]
-     * @param  integer $limit  [description]
-     * @return [type]          [description]
-     */
-    public function getByTag(Tag $tag, $offset = 0, $limit= 10)
+    public function getTags(Link $link, $offset = 0, $limit= 10)
     {
-        $links = $this->linkRepository->findBy(
-            ['tags' => $tag],
-            null,
+        $tags = $this->tagRepository->findBy(
+            ['links' => $link],
+            ['createdAt' => 'DESC'],
             $limit,
             $offset
         );
 
-        return $links;
+        return $tags;
     }
 
-    public function setLinkRepository(LinkRepository $repository)
+
+    public function setTagRepository(TagRepository $repository)
     {
-        $this->linkRepository = $repository;
+        $this->tagRepository = $repository;
     }
 }
