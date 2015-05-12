@@ -12,3 +12,8 @@ services:
         arguments: []
         calls:
             - [setUserService, ["@user_service"]]
+
+    splio_watch.user_controller:
+        class: Splio\WatchBundle\Controller\UserController
+        arguments: []
+        parent: splio_rest.base_controller

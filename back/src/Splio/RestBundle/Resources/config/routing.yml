@@ -1,4 +1,4 @@
 home:
     path:   /
     defaults:
-        _controller: base_controller:indexAction
+        _controller: splio_rest_controller:indexAction
