@@ -1,3 +1,7 @@
+splio_authentication:
+    resource: "@SplioAuthenticationBundle/Resources/config/routing.yml"
+    prefix:   /
+
 splio_rest:
     resource: "@SplioRestBundle/Resources/config/routing.yml"
     prefix:   /
