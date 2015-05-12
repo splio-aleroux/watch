@@ -1,0 +1,4 @@
+services:
+#    splio_rest.example:
+#        class: Splio\RestBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
