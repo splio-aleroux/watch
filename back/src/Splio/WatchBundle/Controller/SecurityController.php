@@ -78,7 +78,7 @@ class SecurityController extends RestController
         ]);
 
         $userData = $userResponse->json();
-        if (!($user = $this->userRepository->findOneBy(['email' => $user['email']]))) {
+        if (!($user = $this->userRepository->findOneBy(['email' => $userData['email']]))) {
             var_dump($userData);
             die;
             $userPayload = [
