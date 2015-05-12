@@ -15,5 +15,12 @@ services:
 
     splio_watch.user_controller:
         class: Splio\WatchBundle\Controller\UserController
-        arguments: []
+        parent: splio_rest.base_controller
+
+    splio_watch.link_controller:
+        class: Splio\WatchBundle\Controller\LinkController
+        parent: splio_rest.base_controller
+
+    splio_watch.tag_controller:
+        class: Splio\WatchBundle\Controller\TagController
         parent: splio_rest.base_controller
