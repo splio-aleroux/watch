@@ -4,6 +4,7 @@ namespace Splio\WatchBundle\Service;
 
 use Splio\WatchBundle\Entity\User;
 use Splio\WatchBundle\Entity\LinkRepository;
+use Splio\WatchBundle\Entity\TagRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Orm\EntityManager;
 
@@ -13,6 +14,11 @@ class UserService
      * @var LinkRepository
      */
     protected $linkRepository;
+
+    /**
+     * @var TagRepository
+     */
+    protected $tagRepository;
 
     /**
      * @var EntityManager
@@ -53,9 +59,21 @@ class UserService
         return $links;
     }
 
+    public function getTags(User $user, $offset = 0, $limit = 10)
+    {
+        $tags = $this->tagRepository->findTagsOfUser($user, $offset, $limit);
+
+        return $tags;
+    }
+
     public function setLinkRepository(LinkRepository $repository)
     {
         $this->linkRepository = $repository;
+    }
+
+    public function setTagRepository(TagRepository $repository)
+    {
+        $this->tagRepository = $repository;
     }
 
     public function setEntityManager(EntityManager $em)

@@ -17,7 +17,7 @@ class TagService
 
     public function getLinks(Tag $tag, $offset = 0, $limit= 10)
     {
-        $links = $this->linkRepository->findLinksOfTag($tag, $offset = 0, $limit = 10);
+        $links = $this->linkRepository->findLinksOfTag($tag, $offset, $limit);
 
         return $links;
     }

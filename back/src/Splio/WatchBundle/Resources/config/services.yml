@@ -5,6 +5,7 @@ services:
         calls:
             - [setLinkRepository, ["@link_repository"]]
             - [setEntityManager, ["@doctrine.orm.entity_manager"]]
+            - [setTagRepository, ["@tag_repository"]]
 
     user_service:
         alias: splio_watch.user_service
