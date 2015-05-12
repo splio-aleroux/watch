@@ -3,6 +3,7 @@
 namespace Splio\WatchBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
@@ -15,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * )
  * @ORM\Entity(repositoryClass="Splio\WatchBundle\Entity\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var integer
@@ -94,6 +95,32 @@ class User
         $this->followers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->followings = new \Doctrine\Common\Collections\ArrayCollection();
         $this->links = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function getPassword()
+    {
+        return $this->getEncryptedPassword();
+    }
+
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+
+    public function getSalt()
+    {
+        return 'no-salt';
+    }
+
+    public function getUsername()
+    {
+        return $this->getEmail();
+    }
+
+    public function eraseCredentials()
+    {
+        return;
     }
 
     /**

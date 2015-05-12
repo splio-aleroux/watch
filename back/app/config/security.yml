@@ -2,17 +2,15 @@ security:
     providers:
         in_memory:
             memory: ~
-
+        wsse:
+            id: wsse.user_provider
+    encoders:
+        Splio\RestBundle\Security\User\UserProvider: sha512
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt|error)|css|images|js)/
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
-        default:
-            anonymous: ~
-
-security:
-    firewalls:
         wsse_secured:
             pattern:   /.*
+            stateless: true
             wsse:      true

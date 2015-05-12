@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\DemoBundle\Security\Firewall;
+namespace Splio\RestBundle\Security\Firewall;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -8,7 +8,7 @@ use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
-use Acme\DemoBundle\Security\Authentication\Token\WsseUserToken;
+use Splio\RestBundle\Security\Authentication\Token\WsseUserToken;
 
 /**
  *
@@ -38,6 +38,7 @@ class WsseListener implements ListenerInterface
         if (!$request->headers->has('x-wsse') || 1 !== preg_match($wsseRegex, $request->headers->get('x-wsse'), $matches)) {
             return;
         }
+
 
         $token = new WsseUserToken();
         $token->setUser($matches[1]);

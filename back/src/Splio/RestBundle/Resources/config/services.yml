@@ -9,3 +9,23 @@ services:
 
     splio_rest_controller:
         alias: splio_rest.base_controller
+
+    security.authentication.provider.wsse.wsse_secured:
+        class:  Splio\RestBundle\Security\Authentication\Provider\WsseProvider
+        arguments: ['@wsse.user_provider', %kernel.cache_dir%/security/nonces]
+
+    wsse.security.authentication.listener:
+        class:  Splio\RestBundle\Security\Firewall\WsseListener
+        arguments: [@security.context, @security.authentication.manager]
+
+    wsse.user_provider:
+        class: Splio\RestBundle\Security\User\UserProvider
+        calls:
+            - [setUserRepository, ['@splio_watch.user_repository']]
+
+    splio_watch.user_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - Splio\WatchBundle\Entity\User

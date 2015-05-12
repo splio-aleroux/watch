@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\DemoBundle\DependencyInjection\Security\Factory;
+namespace Splio\RestBundle\DependencyInjection\Security\Factory;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\DemoBundle\Security\Authentication\Token;
+namespace Splio\RestBundle\Security\Authentication\Token;
 
 use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 

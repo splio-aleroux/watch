@@ -1,13 +1,13 @@
 <?php
 
-namespace Acme\DemoBundle\Security\Authentication\Provider;
+namespace Splio\RestBundle\Security\Authentication\Provider;
 
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\NonceExpiredException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Acme\DemoBundle\Security\Authentication\Token\WsseUserToken;
+use Splio\RestBundle\Security\Authentication\Token\WsseUserToken;
 
 /**
  *
@@ -24,6 +24,10 @@ class WsseProvider implements AuthenticationProviderInterface
     {
         $this->userProvider = $userProvider;
         $this->cacheDir     = $cacheDir;
+
+        if (!file_exists($this->cacheDir)) {
+            mkdir($this->cacheDir, true);
+        }
     }
 
     /**
@@ -31,9 +35,9 @@ class WsseProvider implements AuthenticationProviderInterface
      */
     public function authenticate(TokenInterface $token)
     {
-        $user = $this->userProvider->loadUserByUsername($token->getUsername());
+        $user = $this->userProvider->loadUserByUserName($token->getUsername());
 
-        if ($user && $this->validateDigest($token->digest, $token->nonce, $token->created, $user->getPassword())) {
+        if ($user && $this->validateDigest($token->digest, $token->nonce, $token->created, $user->getSecretKey())) {
             $authenticatedToken = new WsseUserToken($user->getRoles());
             $authenticatedToken->setUser($user);
 
