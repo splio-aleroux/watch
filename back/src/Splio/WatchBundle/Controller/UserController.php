@@ -3,7 +3,11 @@
 namespace Splio\WatchBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 use Splio\RestBundle\Controller\BaseController as RestController;
+use Splio\WatchBundle\Type\UserCreateType;
 
 /**
  * @Route("/user", service="splio_watch.user_controller")
@@ -12,11 +16,44 @@ class UserController extends RestController
 {
     /**
      * @Route(
-     *     "/{id}",
-     *     requirements={"id" = "\d+"}
+     *     "/",
+     *     name="splio_watch_user_create",
+     *     requirements={
+     *         "_method": "POST"
+     *     }
      * )
-     * Resource("splio:watch:user")
-     * Type("\Splio\WatchBundle\Type\UserType")
+     */
+    public function createAction(Request $request)
+    {
+        $creation = new UserCreateType();
+        $creation->bind($this->getRequestContent($request));
+
+
+        $errors = $this->validator->validate($creation);
+        if (0 === $errors->count()) {
+            // call the service
+            var_dump($creation);
+            return $this->renderJson(1);
+        } else {
+            $results = ["errors" => []];
+            $violations = $errors->getIterator();
+            foreach ($violations as $key => $error) {
+                $results["errors"][$error->getPropertyPath()][] = $error->getMessage();
+            }
+
+            return $this->renderJson($results, Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    /**
+     * @Route(
+     *     "/{id}",
+     *     name="splio_watch_user",
+     *     requirements={
+     *         "id": "\d+",
+     *         "_method": "GET"
+     *     }
+     * )
      */
     public function userAction($id)
     {
@@ -52,12 +89,15 @@ class UserController extends RestController
 
     /**
      * @Route(
-     *     "/{userId}/links"
+     *     "/{id}/links",
+     *     name="splio_watch_user_links",
+     *     requirements={
+     *         "id": "\d+",
+     *         "_method": "GET"
+     *     }
      * )
-     * Resource("splio:watch:link")
-     * Type("\Splio\WatchBundle\Type\LinkType")
      */
-    public function linksAction($userId)
+    public function linksAction($id)
     {
         $data = [
             "size" => 123,

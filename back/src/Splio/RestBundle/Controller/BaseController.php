@@ -4,7 +4,9 @@ namespace Splio\RestBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Validator\ValidatorInterface;
 
 class BaseController
 {
@@ -14,6 +16,11 @@ class BaseController
     protected $router = null;
 
     /**
+     * @var ValidatorInterface
+     */
+    protected $validator = null;
+
+    /**
      * @var boolean
      */
     protected $isDebug;
@@ -21,6 +28,19 @@ class BaseController
     public function indexAction()
     {
         return $this->renderJson(["foo" => "bar"], 201);
+    }
+
+    protected function getRequestContent(Request $request)
+    {
+        if ($request->isMethod('POST')) {
+            if ($request->headers->get('content-type') === 'application/json') {
+                return json_decode($request->getContent());
+            }
+
+            return $request->request->all();
+        }
+
+        return null;
     }
 
     protected function renderJson($content, $statusCode = 200, $headers = [])
@@ -43,6 +63,11 @@ class BaseController
     public function setRouter(RouterInterface $router)
     {
         $this->router = $router;
+    }
+
+    public function setValidator(ValidatorInterface $validator)
+    {
+        $this->validator = $validator;
     }
 
     public function setDebug($debug = true)

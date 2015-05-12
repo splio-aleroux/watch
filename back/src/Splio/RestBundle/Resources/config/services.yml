@@ -5,6 +5,7 @@ services:
         calls:
             - [setRouter, ['@router']]
             - [setDebug, ['%kernel.debug%']]
+            - [setValidator, ['@validator']]
 
     splio_rest_controller:
         alias: splio_rest.base_controller
