@@ -9,9 +9,9 @@ var DefaultRoute = Router.DefaultRoute;
 
 var Routes = (
     <Route path="/" handler={require('./app.jsx')}>
-        <DefaultRoute handler={require('./components/CommentBox.js')} />
-        <Route name="sign-in" path="/signin" handler={require('./components/SignIn.js')} />
-        <Route name="sign-out" path="/signout" handler={require('./components/SignOut.js')} />
+        <DefaultRoute handler={require('./components/SplioWatch')} />
+        <Route name="sign-in" path="/signin" handler={require('./components/SignIn')} />
+        <Route name="sign-out" path="/signout" handler={require('./components/SignOut')} />
     </Route>
 );
 
