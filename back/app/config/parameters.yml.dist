@@ -18,3 +18,7 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    front_app_url:    http://domain.tld
+    github_app_id:    123
+    github_app_secret:    abc

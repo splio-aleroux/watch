@@ -19,6 +19,13 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('splio_watch');
+        $rootNode
+            ->children()
+                ->scalarNode('front_app_url')->end()
+                ->scalarNode('github_app_id')->end()
+                ->scalarNode('github_app_secret')->end()
+            ->end()
+        ;
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for

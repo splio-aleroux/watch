@@ -71,3 +71,8 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+splio_watch:
+    front_app_url:  "%front_app_url%"
+    github_app_id:  "%github_app_id%"
+    github_app_secret:  "%github_app_secret%"

@@ -22,6 +22,10 @@ class SplioWatchExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('splio_watch.front_app_url', $config['front_app_url']);
+        $container->setParameter('splio_watch.github.application_id', $config['github_app_id']);
+        $container->setParameter('splio_watch.github.application_secret', $config['github_app_secret']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

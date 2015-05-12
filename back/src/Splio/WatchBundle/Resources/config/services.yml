@@ -84,3 +84,6 @@ services:
         calls:
             - [setUserService, ['@user_service']]
             - [setUserRepository, ['@user_repository']]
+            - [setFrontAppUrl, ['%splio_watch.front_app_url%']]
+            - [setGithubAppId, ['%splio_watch.github.application_id%']]
+            - [setGithubAppSecret, ['%splio_watch.github.application_secret%']]

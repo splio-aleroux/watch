@@ -15,8 +15,9 @@ use Doctrine\Orm\EntityRepository;
  */
 class SecurityController extends RestController
 {
-    private $client_id = 'de3f0e26bf80de6384cd';
-    private $client_secret = 'd751461f6f5779fc843a72a30a85f71239c59448';
+    protected $frontAppUrl;
+    protected $githubAppId;
+    protected $githubAppSecret;
 
     /**
      * @var UserService
@@ -38,7 +39,7 @@ class SecurityController extends RestController
         $endpoint = 'https://github.com/login/oauth/authorize';
 
         $url = $endpoint.'?'.http_build_query([
-            'client_id' => $this->client_id,
+            'client_id' => $this->githubAppId,
             'state' => $csrfToken,
         ]);
 
@@ -51,7 +52,9 @@ class SecurityController extends RestController
     public function oauthAction(Request $request)
     {
 
-        // @TODO REFACTOR THIS MESS
+        // @TODO Refactor this mess
+        // @TODO Check that state is the same as provided earlier
+        // @TODO Split into dedicated methods
         $code = $request->query->get('code');
 
         $client = new Client();
@@ -61,8 +64,8 @@ class SecurityController extends RestController
                 "accept" => "application/json"
             ],
             'body' => [
-                'client_id' => $this->client_id,
-                'client_secret' => $this->client_secret,
+                'client_id' => $this->githubAppId,
+                'client_secret' => $this->githubAppSecret,
                 'code' => $code
             ]
         ];
@@ -78,6 +81,12 @@ class SecurityController extends RestController
         ]);
 
         $userData = $userResponse->json();
+
+        if (!array_key_exists('email', $userData)) {
+            // OAuth failure
+            return new RedirectResponse($this->router->generateUrl('app_login', [], true));
+        }
+
         if (!($user = $this->userRepository->findOneBy(['email' => $userData['email']]))) {
             $userPayload = [
                 'email' => $userData['email'],
@@ -88,7 +97,7 @@ class SecurityController extends RestController
             $user = $this->userService->create($userPayload);
         }
 
-        return new RedirectResponse('http://box.local/index.html?'.http_build_query(['public' => $user->getPublicKey(), 'secret' => $user->getSecretKey()]));
+        return new RedirectResponse($this->frontAppUrl.'?'.http_build_query(['public' => $user->getPublicKey(), 'secret' => $user->getSecretKey()]));
     }
 
     public function setUserService(UserService $service)
@@ -99,5 +108,19 @@ class SecurityController extends RestController
     public function setUserRepository(EntityRepository $repository)
     {
         $this->userRepository = $repository;
+    }
+
+    public function setFrontAppUrl($url)
+    {
+        $this->frontAppUrl = $url;
+    }
+
+    public function setGithubAppId($value)
+    {
+        $this->githubAppId = $value;
+    }
+    public function setGithubAppSecret($value)
+    {
+        $this->githubAppSecret = $value;
     }
 }
