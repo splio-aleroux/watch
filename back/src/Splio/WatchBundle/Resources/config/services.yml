@@ -1,0 +1,14 @@
+services:
+    splio_watch.user_service:
+        class: Splio\WatchBundle\Service\UserService
+        arguments: []
+
+    user_service:
+        alias: splio_watch.user_service
+
+    # Controller as service
+    splio_watch.default_controller:
+        class: Splio\WatchBundle\Controller\DefaultController
+        arguments: []
+        calls:
+            - [setUserService, ["@user_service"]]
