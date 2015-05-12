@@ -27,4 +27,9 @@ class UserTest extends WebTestCase
         $em->persist($claire);
         $em->flush();
     }
+
+    public function testCreate()
+    {
+
+    }
 }
