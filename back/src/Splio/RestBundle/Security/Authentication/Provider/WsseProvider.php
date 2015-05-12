@@ -26,7 +26,7 @@ class WsseProvider implements AuthenticationProviderInterface
         $this->cacheDir     = $cacheDir;
 
         if (!file_exists($this->cacheDir)) {
-            mkdir($this->cacheDir, true);
+            mkdir($this->cacheDir, 0777, true);
         }
     }
 
