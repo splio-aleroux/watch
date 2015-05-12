@@ -5,6 +5,7 @@ namespace Splio\WatchBundle\Service;
 use Splio\WatchBundle\Entity\User;
 use Splio\WatchBundle\Entity\LinkRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Orm\EntityManager;
 
 class UserService
 {
@@ -13,20 +14,25 @@ class UserService
      */
     protected $linkRepository;
 
+    /**
+     * @var EntityManager
+     */
+    protected $entityManager;
+
     // Create user
     public function create(array $arguments){
         $user = new User();
+        $user->setCreatedAt(new \DateTime());
 
         foreach ($arguments as $propertyName => $value) {
             $method = 'set' . ucfirst($propertyName);
             $user->$method($value);
         }
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
 
-        return new Response ($user->getId());
+        return $user;
     }
 
     /**
@@ -50,6 +56,11 @@ class UserService
     public function setLinkRepository(LinkRepository $repository)
     {
         $this->linkRepository = $repository;
+    }
+
+    public function setEntityManager(EntityManager $em)
+    {
+        $this->entityManager = $em;
     }
 
     // Delete user

@@ -4,6 +4,7 @@ services:
         arguments: []
         calls:
             - [setLinkRepository, ["@link_repository"]]
+            - [setEntityManager, ["@doctrine.orm.entity_manager"]]
 
     user_service:
         alias: splio_watch.user_service
@@ -37,6 +38,16 @@ services:
     tag_repository:
         alias: splio_watch.tag_repository
 
+    splio_watch.user_repository:
+        class: Splio\WatchBundle\Entity\UserRepository
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - 'SplioWatchBundle:User'
+
+    user_repository:
+        alias: splio_watch.user_repository
+
     # Controller as service
     splio_watch.default_controller:
         class: Splio\WatchBundle\Controller\DefaultController
@@ -56,3 +67,10 @@ services:
     splio_watch.tag_controller:
         class: Splio\WatchBundle\Controller\TagController
         parent: splio_rest.base_controller
+
+    splio_watch.security_controller:
+        class: Splio\WatchBundle\Controller\SecurityController
+        parent: splio_rest.base_controller
+        calls:
+            - [setUserService, ['@user_service']]
+            - [setUserRepository, ['@user_repository']]

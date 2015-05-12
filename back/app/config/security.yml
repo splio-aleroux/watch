@@ -1,7 +1,5 @@
 security:
     providers:
-        in_memory:
-            memory: ~
         wsse:
             id: wsse.user_provider
     encoders:
@@ -10,6 +8,9 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        basic:
+            pattern: (/|/auth.*)$
+            anonymous: ~
         wsse_secured:
             pattern:   /.*
             stateless: true

@@ -22,10 +22,3 @@ services:
         class: Splio\RestBundle\Security\User\UserProvider
         calls:
             - [setUserRepository, ['@splio_watch.user_repository']]
-
-    splio_watch.user_repository:
-        class: Doctrine\ORM\EntityRepository
-        factory_service: doctrine.orm.default_entity_manager
-        factory_method: getRepository
-        arguments:
-            - Splio\WatchBundle\Entity\User

@@ -37,7 +37,7 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="encrypted_password", type="string")
+     * @ORM\Column(name="encrypted_password", type="string", nullable=true)
      */
     private $encryptedPassword;
 
