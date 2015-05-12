@@ -15,9 +15,12 @@
     "watchify": "^3.2.1",
     "reactify": "^1.1.1"
   },
+  "browserify": {
+    "transform": ["reactify"]
+  },
   "scripts": {
     "start": "watchify -o bundle.js -v -d index.js",
-    "build": "browserify -t [reactify --extension jsx] index.js -o bundle.js",
+    "build": "browserify index.js -o bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

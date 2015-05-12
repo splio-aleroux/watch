@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
     </head>
     <body>
-
+        <div id="content"></div>
     </body>
     <script src="bundle.js"></script>
 </html>
