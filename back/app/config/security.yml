@@ -10,3 +10,9 @@ security:
 
         default:
             anonymous: ~
+
+security:
+    firewalls:
+        wsse_secured:
+            pattern:   /.*
+            wsse:      true
