@@ -41,6 +41,7 @@ class UserRepository extends EntityRepository
         return $this->createQueryBuilder("u")
             ->setFirstResult($offset)
             ->setMaxResults($limit)
+            ->orderBy('t.createdAt', 'DESC')
             ->getQuery()->getResult()
             ;
     }

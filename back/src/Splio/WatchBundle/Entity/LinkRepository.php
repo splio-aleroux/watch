@@ -12,18 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class LinkRepository extends EntityRepository
 {
-    /**
-     * [findLinksOfTag description]
-     * @param  Tag     $tag    [description]
-     * @param  integer $offset [description]
-     * @param  integer $limit  [description]
-     * @return [type]  [description]
-     */
     public function getTagLinks(Tag $tag, $offset = 0, $limit = 10)
     {
         return $this->getQueryTagLinks($tag)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
+            ->orderBy('l.createdAt', 'DESC')
             ->getQuery()->getResult()
             ;
     }
@@ -41,6 +35,7 @@ class LinkRepository extends EntityRepository
         return $this->getQueryUserLinks($user)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
+            ->orderBy('l.createdAt', 'DESC')
             ->getQuery()->getResult()
             ;
     }
@@ -58,6 +53,7 @@ class LinkRepository extends EntityRepository
         return $this->createQueryBuilder("l")
             ->setFirstResult($offset)
             ->setMaxResults($limit)
+            ->orderBy('l.createdAt', 'DESC')
             ->getQuery()->getResult()
             ;
     }

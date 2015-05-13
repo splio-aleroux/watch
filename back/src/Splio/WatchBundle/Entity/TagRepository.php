@@ -26,6 +26,7 @@ class TagRepository extends EntityRepository
         return $this->getQueryLinkTags($link)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
+            ->orderBy('t.createdAt', 'DESC')
             ->getQuery()->getResult()
             ;
     }
@@ -43,6 +44,7 @@ class TagRepository extends EntityRepository
         return $this->getQueryUserTags($user)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
+            ->orderBy('t.createdAt', 'DESC')
             ->getQuery()->getResult()
             ;
     }
@@ -60,6 +62,7 @@ class TagRepository extends EntityRepository
         return $this->createQueryBuilder("t")
             ->setFirstResult($offset)
             ->setMaxResults($limit)
+            ->orderBy('t.createdAt', 'DESC')
             ->getQuery()->getResult()
             ;
     }
