@@ -21,12 +21,17 @@ class TagRepository extends EntityRepository
      */
     public function getLinkTags(Link $link, $offset = 0, $limit = 10)
     {
-        return $this->createQueryBuilder("t")
-            ->innerJoin("t.links", "l", "WITH", "l=:link")
-            ->setParameter("link", $link)
+        return $this->getQueryLinkTags($link)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getQuery()->getResult();
+    }
+
+    public function countLinkTags(Link $link)
+    {
+        return $this->getQueryLinkTags($link)
+            ->select('count(t.id)')
+            ->getQuery()->getSingleScalarResult();
     }
 
     /**
@@ -38,13 +43,17 @@ class TagRepository extends EntityRepository
      */
     public function getUserTags(User $user, $offset = 0, $limit = 10)
     {
-        return $this->createQueryBuilder("t")
-            ->innerJoin("t.links", 'l')
-            ->innerJoin("l.user", "u", "WITH", "u=:user")
-            ->setParameter("user", $user)
+        return $this->getQueryUserTags($user)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getQuery()->getResult();
+    }
+
+    public function countUserTags(User $user)
+    {
+        return $this->getQueryUserTags($user)
+            ->select('count(t.id)')
+            ->getQuery()->getSingleScalarResult();
     }
 
     public function get($offset = 0, $limit = 10)
@@ -60,5 +69,20 @@ class TagRepository extends EntityRepository
         return $this->createQueryBuilder("t")
             ->select('count(t.id)')
             ->getQuery()->getSingleScalarResult();
+    }
+
+    private function getQueryLinkTags(Link $link)
+    {
+        return $this->createQueryBuilder("t")
+            ->innerJoin("t.links", "l", "WITH", "l=:link")
+            ->setParameter("link", $link);
+    }
+
+    private function getQueryUserTags(User $user)
+    {
+        return $this->createQueryBuilder("t")
+            ->innerJoin("t.links", 'l')
+            ->innerJoin("l.user", "u", "WITH", "u=:user")
+            ->setParameter("user", $user);
     }
 }

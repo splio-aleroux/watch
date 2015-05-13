@@ -25,6 +25,13 @@ class TagService
         return $links;
     }
 
+    public function countLinks(Tag $tag)
+    {
+        $count = $this->linkRepository->countTagLinks($tag);
+
+        return $count;
+    }
+
     public function getTags($offset = 0, $limit = 10)
     {
         $tags = $this->tagRepository->get($offset, $limit);

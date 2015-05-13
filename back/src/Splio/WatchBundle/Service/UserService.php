@@ -91,14 +91,16 @@ class UserService
      */
     public function getLinks(User $user, $offset = 0, $limit = 10)
     {
-        $links = $this->linkRepository->findBy(
-            ['user' => $user],
-            ['createdAt' => 'DESC'],
-            $limit,
-            $offset
-        );
+        $links = $this->linkRepository->getUserLinks($user, $offset, $limit);
 
         return $links;
+    }
+
+    public function countLinks(User $user)
+    {
+        $count = $this->linkRepository->countUserLinks($user);
+
+        return $count;
     }
 
     public function getTags(User $user, $offset = 0, $limit = 10)
@@ -106,6 +108,13 @@ class UserService
         $tags = $this->tagRepository->getUserTags($user, $offset, $limit);
 
         return $tags;
+    }
+
+    public function countTags(User $user)
+    {
+        $count = $this->tagRepository->countUserTags($user);
+
+        return $count;
     }
 
     public function setLinkRepository(LinkRepository $repository)
