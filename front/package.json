@@ -13,7 +13,8 @@
     "jquery": "^2.1.4",
     "underscore": "^1.8.3",
     "request": "^2.55.0",
-    "sha1": "^1.1.0"
+    "sha1": "^1.1.0",
+    "base-64": "^0.1.0"
   },
   "devDependencies": {
     "browserify": "^10.1.3",
@@ -24,8 +25,8 @@
     "transform": ["reactify"]
   },
   "scripts": {
-    "start": "node_modules/.bin/watchify -o bundle.js -v -d index.js",
-    "build": "node_modules/.bin/browserify index.js -o bundle.js",
+    "start": "watchify -o bundle.js -v -d index.js",
+    "build": "browserify index.js -o bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

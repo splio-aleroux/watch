@@ -5,8 +5,9 @@ var LINK_URL = "/links";
 var LinkRepository = assign({}, {
     getAll: function() {
         var options = {
-            "url": LINK_URL
+            "url": RequestService.computeUrl(LINK_URL)
         };
+
         var links = [];
         RequestService.requestWsse(options, function(results) {
             links = results;

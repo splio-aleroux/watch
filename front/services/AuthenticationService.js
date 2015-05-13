@@ -2,15 +2,21 @@ var localStorageService = require('./LocalStorageService');
 var _ = require('underscore');
 var assign = require('object-assign');
 var sha1 = require('sha1');
+var base64 = require('base-64');
 var request = require('request');
 
-var AUTHENTICATION_IDENTIFIER = "watch-auth";
+var AUTHENTICATION_IDENTIFIER = "splio-watch-auth";
 var AUTHENTICATION_REDIRECT_URL = "auth/login";
 var AUTHENTICATION_AUTH_URL = "auth/oauth";
 
 
 var AuthenticationService = {
     keys: {},
+    checkRequest: function() {
+        var queryString = window.location.search.substr(1);
+        var regex = RegExp('([\d\w]+)&{1}([\d\w]+)$');
+        var query = queryString.split('&');
+    },
     hasKeys: function() {
         var keys = localStorageService.getValues(AUTHENTICATION_IDENTIFIER);
         return (
@@ -58,26 +64,14 @@ var AuthenticationService = {
                     'X-WSSE': wssePhrase
                 }
             }
-
-            request(options, function(results) {
-                console.log(results);
-            });
         }
-    },
-
-    computeUrl: function(uri) {
-        var url = window.location.protocol+'//';
-        url += window.location.hostname;
-        url += '/'+uri
-
-        return uri;
     },
 
     computeWsseKey: function() {
         var createdAt = (new Date()).toString();
         var nonce = Math.random() * Math.pow(10, 9);
         nonce += createdAt;
-        var digest = sha1(this.keys.public+createdAt+nonce+this.keys.secret);
+        var digest = base64.encode(sha1(nonce+createdAt+this.keys.secret));
 
         return {
             "createdAt":  createdAt,
