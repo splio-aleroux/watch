@@ -5,6 +5,7 @@ var sha1 = require('sha1');
 var base64 = require('base-64');
 var request = require('request');
 var requestService = require('./requestService');
+var qs = require('qs');
 
 var AUTHENTICATION_IDENTIFIER = "splio-watch-auth";
 var AUTHENTICATION_REDIRECT_URL = "auth/login";
@@ -14,9 +15,15 @@ var AUTHENTICATION_AUTH_URL = "auth/oauth";
 var AuthenticationService = {
     keys: {},
     checkRequest: function() {
-        var queryString = window.location.search.substr(1);
-        var regex = RegExp('([\d\w]+)&{1}([\d\w]+)$');
-        var query = queryString.split('&');
+        var queryString = qs.parse(window.location.search.substring(1));
+        if (
+            _.has(queryString, 'public')
+            && null !== queryString.public
+            && _.has(queryString, 'secret')
+            && null !== queryString.secret
+        ) {
+            this.saveKeys(queryString.public, queryString.secret);
+        }
     },
     hasKeys: function() {
         var keys = localStorageService.getValues(AUTHENTICATION_IDENTIFIER);

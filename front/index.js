@@ -1,7 +1,7 @@
 // Launch authentication
 
 var AuthenticationService = require('./services/AuthenticationService');
-// AuthenticationService.checkRequest();
+AuthenticationService.checkRequest();
 AuthenticationService.auth();
 
 var Router = require('react-router');

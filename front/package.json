@@ -14,7 +14,8 @@
     "underscore": "^1.8.3",
     "request": "^2.55.0",
     "sha1": "^1.1.0",
-    "base-64": "^0.1.0"
+    "base-64": "^0.1.0",
+    "qs": "^2.4.2"
   },
   "devDependencies": {
     "browserify": "^10.1.3",
