@@ -2,7 +2,9 @@
 
 namespace Splio\WatchBundle\Service;
 
+use Doctrine\ORM\EntityManager;
 use Splio\WatchBundle\Entity\Link;
+use Splio\WatchBundle\Entity\User;
 use Splio\WatchBundle\Entity\TagRepository;
 use Splio\WatchBundle\Entity\LinkRepository;
 
