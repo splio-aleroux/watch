@@ -91,6 +91,8 @@ nelmio_cors:
             allow_methods: ['GET','POST','PATCH','PUT','DELETE','OPTIONS','HEAD']
             max_age: 3600
 
+splio_rest:
+    accept_pattern: "#^application/vnd\.splio\.watch\.(?P<version>\d+)\+(?P<format>json|xml)$#"
 splio_watch:
     front_app_url:  "%front_app_url%"
     github_app_id:  "%github_app_id%"

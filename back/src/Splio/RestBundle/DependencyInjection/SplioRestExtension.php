@@ -22,7 +22,10 @@ class SplioRestExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('splio_rest.accept_pattern', $config['accept_pattern']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+        $loader->load('event-listener.yml');
     }
 }

@@ -17,10 +17,10 @@ class LinkController extends RestController
 
     /**
      * @Route(
-     *     "/links"
+     *     "/links",
+     *     name="watch_links_default",
+     *     condition="request.get('version') == null"
      * )
-     * Resource("splio:watch:link")
-     * Type("\Splio\WatchBundle\Type\LinkType")
      */
     public function linksAction($offset = 0, $limit = 10)
     {
