@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * )
  * @ORM\Entity(repositoryClass="Splio\WatchBundle\Entity\UserRepository")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @var integer
@@ -86,6 +86,31 @@ class User implements UserInterface
      * @ORM\ManyToMany(targetEntity="User", mappedBy="followers")
      */
     private $followings;
+
+    /**
+     * @see \Serializable::serialize
+     */
+    public function serialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'email' => $this->getEmail(),
+            'createdAt' => $this->getCreatedAt(),
+            'connectedAt' => $this->getConnectedAt(),
+            'publicKey' => $this->getPublicKey()
+        ];
+    }
+
+    /**
+     * @see \Serializable::unserialize
+     */
+    public function unserialize(array $data)
+    {
+        throw new \LogicException(sprintf(
+            'Unserialization of %s is not supported',
+            self::CLASS
+        ));
+    }
 
     /**
      * Constructor

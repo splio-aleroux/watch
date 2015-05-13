@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="link")
  * @ORM\Entity(repositoryClass="Splio\WatchBundle\Entity\LinkRepository")
  */
-class Link
+class Link implements \Serializable
 {
     /**
      * @var integer
@@ -47,6 +47,28 @@ class Link
      * @ORM\ManyToMany(targetEntity="Tag", mappedBy="links")
      */
     private $tags;
+
+    /**
+     * @see \Serializable::serialize
+     */
+    public function serialize()
+    {
+        return [
+            "id" => $this->getId(),
+            "url" => $this->getUrl()
+        ];
+    }
+
+    /**
+     * @see \Serializable::unserialize
+     */
+    public function unserialize(array $data)
+    {
+        throw new \LogicException(sprintf(
+            'Unserialization of %s is not supported',
+            self::CLASS
+        ));
+    }
 
     /**
      * Get id

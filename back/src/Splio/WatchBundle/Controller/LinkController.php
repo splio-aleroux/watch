@@ -4,6 +4,7 @@ namespace Splio\WatchBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Splio\RestBundle\Controller\BaseController as RestController;
+use Splio\WatchBundle\Service\LinkService;
 
 /**
  * @Route("/", service="splio_watch.link_controller")
@@ -17,8 +18,25 @@ class LinkController extends RestController
      * Resource("splio:watch:link")
      * Type("\Splio\WatchBundle\Type\LinkType")
      */
-    public function linksAction()
+    public function linksAction($offset = 0, $limit = 10)
     {
+        // $service = new LinkService();
+        // $serializer = new LinkSerializer();
+        // $data = [
+        //     // Todo get count of links in service
+        //     'size' => 123,
+        //     'data' => [],
+        //     // Todo prepare links generation
+        //     'links' => []
+        // ];
+
+        // $links = $service->all($offset, $limit);
+
+        // foreach ($links as $link) {
+        //     $data['data'][] = $serializer->serialize($link);
+        // }
+
+        // mock api return
         $data = [
             "size" => 123,
             "data" => [

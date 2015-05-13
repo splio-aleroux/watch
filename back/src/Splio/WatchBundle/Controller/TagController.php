@@ -4,6 +4,7 @@ namespace Splio\WatchBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Splio\RestBundle\Controller\BaseController as RestController;
+use Splio\WatchBundle\Service\LinkService;
 
 /**
  * @Route("/tag", service="splio_watch.tag_controller")
@@ -17,8 +18,24 @@ class TagController extends RestController
      * Resource("splio:watch:link")
      * Type("\Splio\WatchBundle\Type\LinkType")
      */
-    public function linksAction($tagName)
+    public function linksAction($tagName, $offset = 0, $limit = 0)
     {
+        // $service = new LinkService();
+        // $serializer = new TagSerializer();
+        // $data = [
+        //     // Todo get count of links in service
+        //     'size' => 123,
+        //     'data' => [],
+        //     // Todo prepare links generation
+        //     'links' => []
+        // ];
+
+        // $links = $service->all($offset, $limit);
+
+        // foreach ($links as $link) {
+        //     $data['data'][] = $serializer->serialize($link);
+        // }
+
         $data = [
             "size" => 123,
             "data" => [
