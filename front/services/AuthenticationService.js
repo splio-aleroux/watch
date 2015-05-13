@@ -14,6 +14,9 @@ var AUTHENTICATION_AUTH_URL = "auth/oauth";
 
 var AuthenticationService = {
     keys: {},
+    init: function() {
+        this.keys = localStorageService.getValues(AUTHENTICATION_IDENTIFIER);
+    },
     checkRequest: function() {
         var queryString = qs.parse(window.location.search.substring(1));
         if (
@@ -64,9 +67,11 @@ var AuthenticationService = {
     },
 
     computeWsseKey: function() {
+        this.init();
         var createdAt = (new Date()).toString();
         var nonce = Math.random() * Math.pow(10, 9);
         nonce += createdAt;
+        nonce = sha1(nonce);
         var digest = base64.encode(sha1(nonce+createdAt+this.keys.secret));
 
         return {
@@ -80,7 +85,7 @@ var AuthenticationService = {
         var wssePhrase = 'UsernameToken Username="'+this.keys.public+'"';
             wssePhrase += ', PasswordDigest="'+wsseKey.digest+'"';
             wssePhrase += ', Nonce="'+wsseKey.nonce+'"';
-            wssePhrase += ', Created="'+wsseKey.createdAt;
+            wssePhrase += ', Created="'+wsseKey.createdAt+'"';
 
         return wssePhrase;
     },

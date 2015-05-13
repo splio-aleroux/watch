@@ -1,7 +1,7 @@
 var assign = require('object-assign');
 var configuration = assign({}, {
     conf: {
-        backEndAddress: 'app.box.local/',
+        backEndAddress: 'app.box.local',
     },
 
     getConfiguration: function() {
