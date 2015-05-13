@@ -7,7 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Tag
  *
- * @ORM\Table(name="tag")
+ * @ORM\Table(
+ *     name="tag",
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(name="name_idx", columns={"name"})
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="Splio\WatchBundle\Entity\TagRepository")
  */
 class Tag implements \Serializable
@@ -61,7 +66,7 @@ class Tag implements \Serializable
     {
         throw new \LogicException(sprintf(
             'Unserialization of %s is not supported',
-            self::CLASS
+            get_class($this)
         ));
     }
 
