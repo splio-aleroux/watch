@@ -27,7 +27,7 @@ var AuthenticationService = {
             window.location.href = window.location.origin
         }
     },
-    hasKeys: function() {
+    isAuthenticated: function() {
         var keys = localStorageService.getValues(AUTHENTICATION_IDENTIFIER);
         return (
             _.has(keys, 'public')
@@ -54,26 +54,12 @@ var AuthenticationService = {
 
     auth: function() {
         // If there is no key, redirect to login URL
-        if (!this.hasKeys()) {
+        if (!this.isAuthenticated()) {
             var url = requestService.computeUrl(AUTHENTICATION_REDIRECT_URL);
 
             window.location = url;
 
             // window.location.href = AUTHENTICATION_REDIRECT_URL;
-        } else {
-            // Check with back-end if everything is OK
-            var wsseKey = this.computeWsseKey();
-            var wssePhrase = this.stringifyWsseKey(wsseKey);
-
-            var url = requestService.computeUrl(AUTHENTICATION_AUTH_URL);
-
-            var options = {
-                "method": "POST",
-                "url": url,
-                "headers": {
-                    'X-WSSE': wssePhrase
-                }
-            }
         }
     },
 

@@ -1,16 +1,20 @@
 // Launch authentication
 
 var AuthenticationService = require('./services/AuthenticationService');
-AuthenticationService.checkRequest();
-AuthenticationService.auth();
+if (
+    !AuthenticationService.isAuthenticated()
+    && !AuthenticationService.checkRequest()
+) {
+    AuthenticationService.auth();
+} else {
+    var Router = require('react-router');
+    var Routes = require('./routes');
+    var React = require('react');
 
-var Router = require('react-router');
-var Routes = require('./routes');
-var React = require('react');
-
-Router.run(Routes, Router.HistoryLocation, function(Components) {
-	React.render(
-		<Components />,
-		document.getElementById('content')
-	);
-});
+    Router.run(Routes, Router.HistoryLocation, function(Components) {
+    	React.render(
+    		<Components />,
+    		document.getElementById('content')
+    	);
+    });
+}
