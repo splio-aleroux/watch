@@ -64,7 +64,7 @@ class WsseProvider implements AuthenticationProviderInterface
         file_put_contents($this->cacheDir.'/'.$nonce, time());
 
         // Valid secret
-        $expected = base64_encode(sha1($nonce.$created.$secret, true));
+        $expected = base64_encode(sha1($nonce.$created.$secret));
 
         return $digest === $expected;
     }
