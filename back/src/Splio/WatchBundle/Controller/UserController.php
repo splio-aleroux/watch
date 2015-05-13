@@ -84,7 +84,7 @@ class UserController extends RestController
 
         $data = [
             // Todo get count of links in service
-            'size' => count($links),
+            'size' => $this->userService->countLinks($user),
             'data' => []
         ];
 

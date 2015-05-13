@@ -59,8 +59,8 @@ class LinkRepository extends EntityRepository
     private function getQueryUserLinks(User $user)
     {
         return $this->createQueryBuilder("l")
-            ->where("l.user_id =:userId")
-            ->setParameter("userId", $user->getId());
+            ->where("l.user = :user")
+            ->setParameter("user", $user);
     }
 
     /**
