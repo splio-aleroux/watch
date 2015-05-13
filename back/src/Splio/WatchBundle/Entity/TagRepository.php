@@ -12,6 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class TagRepository extends EntityRepository
 {
+    public function save(Tag $tag)
+    {
+        $this->_em->persist($tag);
+        $this->_em->flush();
+    }
+
     public function getByName($name)
     {
         return $this->createQueryBuilder("t")

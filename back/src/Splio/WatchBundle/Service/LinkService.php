@@ -2,7 +2,6 @@
 
 namespace Splio\WatchBundle\Service;
 
-use Doctrine\ORM\EntityManager;
 use Splio\WatchBundle\Entity\Link;
 use Splio\WatchBundle\Entity\User;
 use Splio\WatchBundle\Entity\TagRepository;
@@ -20,11 +19,6 @@ class LinkService
      */
     protected $tagRepository;
 
-    /**
-     * @var EntityManager
-     */
-    protected $entityManager;
-
     public function create(User $user, $url)
     {
         $link = new Link();
@@ -33,8 +27,7 @@ class LinkService
         $user->addLink($link); // one to many
         $link->setUser($user); // many to one, owner side
 
-        $this->entityManager->persist($link);
-        $this->entityManager->flush();
+        $this->linkRepository->save($link);
 
         return $link;
     }
@@ -82,10 +75,5 @@ class LinkService
     public function setTagRepository(TagRepository $repository)
     {
         $this->tagRepository = $repository;
-    }
-
-    public function setEntityManager(EntityManager $em)
-    {
-        $this->entityManager = $em;
     }
 }

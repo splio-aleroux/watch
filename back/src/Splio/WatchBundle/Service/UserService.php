@@ -27,7 +27,7 @@ class UserService
 
     /**
      * @param  UserCreateCommand $command
-     * @return User     the user
+     * @return User              the user
      */
     public function create(Command\UserCreateCommand $command)
     {

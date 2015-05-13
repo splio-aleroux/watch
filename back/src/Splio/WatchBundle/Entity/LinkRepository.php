@@ -12,6 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class LinkRepository extends EntityRepository
 {
+    public function save(Link $link)
+    {
+        $this->_em->persist($link);
+        $this->_em->flush();
+    }
+
     public function getTagLinks(Tag $tag, $offset = 0, $limit = 10)
     {
         return $this->getQueryTagLinks($tag)
