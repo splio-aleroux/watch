@@ -16,6 +16,7 @@ var RequestService = assign({}, {
                 "X-WSSE": AuthenticationService.getWssePhrase()
             }
         });
+
         request(_options, callback);
     }
 });
