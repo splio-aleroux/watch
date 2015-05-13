@@ -5,6 +5,7 @@ namespace Splio\WatchBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Splio\RestBundle\Controller\BaseController as RestController;
 use Splio\WatchBundle\Service\LinkService;
+use SimpleBus\Message\Bus\MessageBus;
 
 /**
  * @Route("/tag", service="splio_watch.tag_controller")
@@ -12,7 +13,39 @@ use Splio\WatchBundle\Service\LinkService;
 class TagController extends RestController
 {
     protected $tagSerializer;
+    protected $tagService;
     protected $linkSerializer;
+    protected $commandBus;
+
+    /**
+     * @Route(
+     *     "/",
+     *     name="splio_watch_tag_create",
+     *     requirements={
+     *         "_method": "POST"
+     *     }
+     * )
+     */
+    public function createAction(Request $request)
+    {
+        $content = $this->getRequestContent($request);
+
+        // Create the user creation command
+        $command = new Command\TagCreateCommand($content->name);
+
+        try {
+            // Send the command on the bus
+            $this->commandBus->handle($command);
+
+            // Acknowledge the command execution
+            if ($command->getTag()) {
+                $data = $this->tagSerializer->serialize($command->getTag());
+                return $this->renderJson($data, 201);
+            }
+        } catch (\InvalidArgumentException $e) {
+            return $this->renderJson($e->getViolations(), 400);
+        }
+    }
 
     /**
      * @Route(
@@ -94,5 +127,10 @@ class TagController extends RestController
     public function setLinkSerializer(\Splio\WatchBundle\Serializer\LinkSerializer $serializer)
     {
         $this->linkSerializer = $serializer;
+    }
+
+    public function setCommandBus(MessageBus $bus)
+    {
+        $this->commandBus = $bus;
     }
 }

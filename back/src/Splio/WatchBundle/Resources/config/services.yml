@@ -17,6 +17,8 @@ services:
         calls:
             - [setTagRepository, ["@tag_repository"]]
             - [setLinkRepository, ["@link_repository"]]
+        tags:
+            - { name: command_handler, handles: splio_watch_create_link, method: create }
     link_service:
         alias: splio_watch.link_service
 
@@ -26,6 +28,8 @@ services:
         calls:
             - [setLinkRepository, ["@link_repository"]]
             - [setTagRepository, ["@tag_repository"]]
+        tags:
+            - { name: command_handler, handles: splio_watch_create_tag, method: create }
     tag_service:
         alias: splio_watch.tag_service
 

@@ -22,6 +22,8 @@ services:
         calls:
             - [setLinkService, ["@link_service"]]
             - [setLinkSerializer, ["@link_serializer"]]
+            - [setCommandBus, ["@command_bus"]]
+            - [setSecurityContext, ["@security.context"]]
 
     splio_watch.tag_controller:
         class: Splio\WatchBundle\Controller\TagController
@@ -30,6 +32,7 @@ services:
             - [setTagSerializer, ['@splio_watch.tag_serializer']]
             - [setTagService, ['@splio_watch.tag_service']]
             - [setLinkSerializer, ['@splio_watch.link_serializer']]
+            - [setCommandBus, ["@command_bus"]]
 
     splio_watch.security_controller:
         class: Splio\WatchBundle\Controller\SecurityController

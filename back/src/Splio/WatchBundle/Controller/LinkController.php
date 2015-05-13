@@ -2,10 +2,12 @@
 
 namespace Splio\WatchBundle\Controller;
 
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Splio\RestBundle\Controller\BaseController as RestController;
 use Splio\WatchBundle\Service\LinkService;
 use Splio\WatchBundle\Serializer\LinkSerializer;
+use SimpleBus\Message\Bus\MessageBus;
 
 /**
  * @Route("/links", service="splio_watch.link_controller")
@@ -14,6 +16,41 @@ class LinkController extends RestController
 {
     protected $linkService;
     protected $linkSerializer;
+    protected $securityContext;
+    protected $commandBus;
+
+    /**
+     * @Route(
+     *     "/",
+     *     name="splio_watch_link_create",
+     *     requirements={
+     *         "_method": "POST"
+     *     }
+     * )
+     */
+    public function createAction(Request $request)
+    {
+        $content = $this->getRequestContent($request);
+
+        $userToken = $this->securityContext->getToken()->getUser();
+        $user = $userToken->getUsername();
+
+        // Create the user creation command
+        $command = new Command\LinkCreateCommand($content->url, $user);
+
+        try {
+            // Send the command on the bus
+            $this->commandBus->handle($command);
+
+            // Acknowledge the command execution
+            if ($command->getTag()) {
+                $data = $this->linkSerializer->serialize($command->getLink());
+                return $this->renderJson($data, 201);
+            }
+        } catch (\InvalidArgumentException $e) {
+            return $this->renderJson($e->getViolations(), 400);
+        }
+    }
 
     /**
      * @Route(
@@ -94,5 +131,15 @@ class LinkController extends RestController
     public function setLinkSerializer(LinkSerializer $linkSerializer)
     {
         $this->linkSerializer = $linkSerializer;
+    }
+
+    public function setCommandBus(MessageBus $bus)
+    {
+        $this->commandBus = $bus;
+    }
+
+    public function setSecurityContext(SecurityContext $securityContext)
+    {
+        $this->securityContext = $securityContext;
     }
 }
