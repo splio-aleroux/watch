@@ -28,13 +28,9 @@ class TagsCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $name = $input->getArgument('name');
-        $em = $this->getContainer()->get('doctrine')->getManager();
+        $tagService = $this->getContainer()->get('tag_service');
 
-        $tag = new Tag();
-        $tag->setName($name);
-        $tag->setCreatedAt(new \DateTime());
-        $em->persist($tag);
-        $em->flush();
+        $tag = $tagService->create($name);
 
         $output->writeln($tag->getId());
     }

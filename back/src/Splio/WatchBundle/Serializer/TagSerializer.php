@@ -17,12 +17,12 @@ class TagSerializer extends TagBaseSerializer implements SerializerInterface
 
 	public function serialize(Serializable $resource)
 	{
-		$serializer = parent::serialize($resource);
+		$serialized = parent::serialize($resource);
 		$serialized['links'] = [];
 		$links = $resource->getLinks();
 
 		foreach ($links as $link) {
-			$serialized['link'][] = $this->linkSerializer->serialize($link);
+			$serialized['links'][] = $this->linkSerializer->serialize($link);
 		}
 
 		return $serialized;

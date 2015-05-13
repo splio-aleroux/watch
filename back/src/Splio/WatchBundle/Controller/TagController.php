@@ -12,6 +12,7 @@ use Splio\WatchBundle\Service\LinkService;
 class TagController extends RestController
 {
     protected $tagSerializer;
+    protected $linkSerializer;
 
     /**
      * @Route(
@@ -34,6 +35,29 @@ class TagController extends RestController
 
     /**
      * @Route(
+     *     "/"
+     * )
+     * Resource("splio:watch:tag")
+     * Type("\Splio\WatchBundle\Type\TagType")
+     */
+    public function TagsAction($offset = 0, $limit = 10)
+    {
+        $tags = $this->tagService->getTags($offset, $limit);
+        $data = [
+            // Todo get count of links in service
+            'size' => $this->tagService->count(),
+            'data' => []
+        ];
+
+        foreach ($tags as $tag) {
+            $data['data'][] = $this->tagSerializer->serialize($tag);
+        }
+
+        return $this->renderJson($data);
+    }
+
+    /**
+     * @Route(
      *     "/{tagName}/links/"
      * )
      * Resource("splio:watch:link")
@@ -41,7 +65,7 @@ class TagController extends RestController
      */
     public function linksAction($tagName, $offset = 0, $limit = 10)
     {
-        $tag = null;
+        $tag = $this->tagService->getByName($tagName);
 
         $links = $this->tagService->getLinks($tag, $offset, $limit);
         $data = [
@@ -54,35 +78,6 @@ class TagController extends RestController
             $data['data'][] = $this->linkSerializer->serialize($link);
         }
 
-        // // Tag
-        // $data = [
-        //     "size" => 123,
-        //     "data" => [
-        //         [
-        //             "id" => rand(0,time()),
-        //             "url" => "http://perdu.com",
-        //             "tags" => [
-        //                 "size" => 3,
-        //                 "data" => [
-        //                     ["name" => "js"],
-        //                     ["name" => "react"],
-        //                     ["name" => "flux"],
-        //                 ],
-        //                 "_links" => [
-        //                     "timeline" => ["href" => "http://perdu.com"],
-        //                     "statistics" => ["href" => "http://perdu.com"],
-        //                 ]
-        //             ]
-        //         ]
-        //     ],
-        //     "_links" => [
-        //         "next" => ["href" => "http://perdu.com"],
-        //         "previous" => ["href" => "http://perdu.com"],
-        //         "last" => ["href" => "http://perdu.com"],
-        //         "first" => ["href" => "http://perdu.com"],
-        //     ]
-        // ];
-
         return $this->renderJson($data);
     }
 
@@ -94,5 +89,10 @@ class TagController extends RestController
     public function setTagSerializer(\Splio\WatchBundle\Serializer\TagSerializer $serializer)
     {
         $this->tagSerializer = $serializer;
+    }
+
+    public function setLinkSerializer(\Splio\WatchBundle\Serializer\LinkSerializer $serializer)
+    {
+        $this->linkSerializer = $serializer;
     }
 }

@@ -14,11 +14,12 @@ class TagRepository extends EntityRepository
 {
     public function getByName($name)
     {
-        $this->createQueryBuilder("t")
-            ->where("t.name =:name")
-            ->setParameter("name", $name)
-            ->getQuery()->getResult()
-            ;
+        return $this->createQueryBuilder("t")
+            ->where("t.name = :name")
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getSingleResult()
+        ;
     }
 
     public function getLinkTags(Link $link, $offset = 0, $limit = 10)
