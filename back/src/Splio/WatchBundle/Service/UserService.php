@@ -54,6 +54,13 @@ class UserService
         return $user;
     }
 
+    public function getUsers($offset = 0, $limit = 10)
+    {
+        $users = $this->userRepository->get($offset, $limit);
+
+        return $users;
+    }
+
     public function getByEmail($email)
     {
         $user = $this->userRepository->getByEmail($email);

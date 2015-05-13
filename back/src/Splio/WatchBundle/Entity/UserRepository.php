@@ -27,4 +27,13 @@ class UserRepository extends EntityRepository
             ->setParameter("secretKey", $secretKey)
             ->getQuery()->getResult();
     }
+
+    public function get($offset = 0, $limit = 10)
+    {
+        return $this->createQueryBuilder("u")
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()->getResult()
+        ;
+    }
 }
