@@ -1,12 +1,12 @@
 var AuthenticationService = require('./AuthenticationService');
 var request = require('request');
 var assign = require('object-assign');
+var configuration = require('../configuration');
 
 var RequestService = assign({}, {
     computeUrl: function(uri) {
-        var url = window.location.protocol+'//';
-        url += window.location.hostname;
-        url += uri
+        url = 'http://'+configuration.get('backEndAddress');
+        url += uri;
 
         return url;
     },

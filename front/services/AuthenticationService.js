@@ -4,6 +4,7 @@ var assign = require('object-assign');
 var sha1 = require('sha1');
 var base64 = require('base-64');
 var request = require('request');
+var requestService = require('./requestService');
 
 var AUTHENTICATION_IDENTIFIER = "splio-watch-auth";
 var AUTHENTICATION_REDIRECT_URL = "auth/login";
@@ -45,7 +46,7 @@ var AuthenticationService = {
     auth: function() {
         // If there is no key, redirect to login URL
         if (!this.hasKeys()) {
-            var url = this.computeUrl(AUTHENTICATION_REDIRECT_URL);
+            var url = requestService.computeUrl(AUTHENTICATION_REDIRECT_URL);
 
             window.location = url;
 
@@ -55,7 +56,7 @@ var AuthenticationService = {
             var wsseKey = this.computeWsseKey();
             var wssePhrase = this.stringifyWsseKey(wsseKey);
 
-            var url = this.computeUrl(AUTHENTICATION_AUTH_URL);
+            var url = requestService.computeUrl(AUTHENTICATION_AUTH_URL);
 
             var options = {
                 "method": "POST",
