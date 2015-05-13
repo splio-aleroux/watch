@@ -9,7 +9,49 @@
         <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
     </head>
     <body>
-        <div id="content"></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>SPLIO WATCH</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>Top contributors</div>
+                            <div id="top-contributors" class="col-md-8">
+                                <span class="tag label label-default">Magic system</span>
+                                <span class="tag label label-default">Zucchero</span>
+                                <span class="tag label label-default">Nerf</span>
+                            </div>
+                        </div>
+                        <div id="top-contributors-chart" class="col-md-12">
+                            <img src="./assets/images/chart.jpeg">
+                        </div>
+                        <div class="col-md-12">
+                            <div>Top topics</div>
+                            <div id="top-topics" class="col-md-8">
+                                <span class="tag label label-default">Penis</span>
+                                <span class="tag label label-default">Penis</span>
+                                <span class="tag label label-default">Penis</span>
+                                <span class="tag label label-default">Penis</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            TAG CLOUD
+                            <div class="tag-cloud"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div id="add-link-button" class="col-md-2">boutton add</div>
+                    <div id="searchbar" class="col-md-9"><input id="link-search-input" class="col-md-12"></input></div>
+                    <div id="content" class="col-md-12" style="margin-top: 25px;"></div>
+                </div>
+            </div>
+        </div>
     </body>
     <script src="bundle.js"></script>
 </html>

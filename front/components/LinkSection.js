@@ -20,10 +20,8 @@ var LinkSection = React.createClass({
         });
 
         return (
-            <div className="link-section">
-                <ul className="link-list">
-                    {links}
-                </ul>
+            <div className="row link-section">
+                {links}
             </div>
         );
     },
