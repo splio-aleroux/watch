@@ -4,11 +4,12 @@ namespace Splio\WatchBundle\Serializer;
 
 use Splio\RestBundle\Serializer\SerializerInterface;
 use Splio\WatchBundle\Entity\Link;
+use Splio\WatchBundle\Serializer\LinkBaseSerializer;
 use Splio\WatchBundle\Serializer\TagSerializer;
 use Splio\WatchBundle\Serializer\UserSerializer;
 use \Serializable;
 
-class LinkSerializer implements SerializerInterface
+class LinkSerializer extends LinkBaseSerializer implements SerializerInterface
 {
 	/**
      * @var TagSerializer
@@ -22,8 +23,7 @@ class LinkSerializer implements SerializerInterface
 
 	public function serialize(Serializable $resource)
 	{
-		$this->supports($resource);
-		$serialized = $resource->serialize();
+		$serialized = parent::serialize($resource);
 		$serialized['user'] = $this->userSerializer->serialize($resource->getUser());
 		$serialized['tags'] = [];
 		$tags = $resource->getTags();
@@ -35,23 +35,12 @@ class LinkSerializer implements SerializerInterface
 		return $serialized;
 	}
 
-	public function supports(Serializable $resource)
-	{
-		if (false === ($resource instanceof Link)) {
-            throw new \InvalidArgumentException(sprintf(
-                '%s Serializer supports only instance of Splio\WatchBundle\Entity\Link, %s given',
-                __CLASS__,
-                get_class($resource)
-            ));
-        }
-	}
-
-	public function setTagSerializer(TagSerializer $tagSerializer)
+	public function setTagSerializer(TagBaseSerializer $tagSerializer)
 	{
 		$this->tagSerializer = $tagSerializer;
 	}
 
-	public function setUserSerializer(UserSerializer $userSerializer)
+	public function setUserSerializer(UserBaseSerializer $userSerializer)
 	{
 		$this->userSerializer = $userSerializer;
 	}

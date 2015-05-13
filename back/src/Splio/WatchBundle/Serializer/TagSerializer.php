@@ -5,9 +5,10 @@ namespace Splio\WatchBundle\Serializer;
 use Splio\RestBundle\Serializer\SerializerInterface;
 use Splio\WatchBundle\Entity\Tag;
 use Splio\WatchBundle\Serializer\LinkSerializer;
+use Splio\WatchBundle\Serializer\TagBaseSerializer;
 use \Serializable;
 
-class TagSerializer implements SerializerInterface
+class TagSerializer extends TagBaseSerializer implements SerializerInterface
 {
 	/**
      * @var LinkSerializer
@@ -16,8 +17,7 @@ class TagSerializer implements SerializerInterface
 
 	public function serialize(Serializable $resource)
 	{
-		$this->supports($resource);
-		$serialized = $resource->serialize();
+		$serializer = parent::serialize($resource);
 		$serialized['links'] = [];
 		$links = $resource->getLinks();
 
@@ -28,18 +28,7 @@ class TagSerializer implements SerializerInterface
 		return $serialized;
 	}
 
-	public function supports(Serializable $resource)
-	{
-		if (false === ($resource instanceof Tag)) {
-            throw new \InvalidArgumentException(sprintf(
-                '%s Serializer supports only instance of Splio\WatchBundle\Entity\Tag, %s given',
-                __CLASS__,
-                get_class($resource)
-            ));
-        }
-	}
-
-	public function setLinkSerializer(LinkSerializer $linkSerializer)
+	public function setLinkSerializer(LinkBaseSerializer $linkSerializer)
 	{
 		$this->linkSerializer = $linkSerializer;
 	}

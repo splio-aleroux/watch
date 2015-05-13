@@ -34,12 +34,13 @@ class LinksCommand extends ContainerAwareCommand
     {
         $url = $input->getArgument('url');
         $userId = $input->getArgument('userId');
-        $userRepository = new \Splio\WatchBundle\Entity\UserRepository();
+        $userRepository = $this->getContainer()->get('user_repository');
         $em = $this->getContainer()->get('doctrine')->getManager();
 
-        $user = $userRepository->findById($userId);
+        $user = $userRepository->find($userId);
 
         $link = new Link();
+        $link->setCreatedAt(new \DateTime());
         $link->setUrl($url);
         $link->setUser($user);
         $em->persist($link);

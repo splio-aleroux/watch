@@ -4,26 +4,14 @@ namespace Splio\WatchBundle\Serializer;
 
 use Splio\RestBundle\Serializer\SerializerInterface;
 use Splio\WatchBundle\Entity\User;
-use Splio\WatchBundle\Serializer\UserBaseSerializer;
 use \Serializable;
 
-class UserSerializer extends UserBaseSerializer implements SerializerInterface
+class UserBaseSerializer implements SerializerInterface
 {
-	/**
-     * @var LinkSerializer
-     */
-	protected $linkSerializer;
-
 	public function serialize(Serializable $resource)
 	{
 		$this->supports($resource);
 		$serialized = $resource->serialize();
-		$serialized['links'] = [];
-		$links = $resource->getLinks();
-
-		foreach ($links as $link) {
-			$serialized['link'][] = $this->linkSerializer->serialize($link);
-		}
 
 		return $serialized;
 	}
@@ -37,10 +25,5 @@ class UserSerializer extends UserBaseSerializer implements SerializerInterface
                 get_class($resource)
             ));
         }
-	}
-
-	public function setLinkSerializer(\Splio\WatchBundle\Serializer\LinkBaseSerializer $serializer)
-	{
-		$this->linkSerializer = $serializer;
 	}
 }
