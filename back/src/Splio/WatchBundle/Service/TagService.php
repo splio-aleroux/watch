@@ -18,6 +18,13 @@ class TagService
      */
     protected $tagRepository;
 
+    public function getByName($name)
+    {
+        $tag = $this->tagRepository->getByName($name);
+
+        return $tag;
+    }
+
     public function getLinks(Tag $tag, $offset = 0, $limit = 10)
     {
         $links = $this->linkRepository->getTagLinks($tag, $offset, $limit);

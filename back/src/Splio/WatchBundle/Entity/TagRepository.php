@@ -12,13 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class TagRepository extends EntityRepository
 {
-    /**
-     * [findTagsOfLink description]
-     * @param  Link    $link   [description]
-     * @param  integer $offset [description]
-     * @param  integer $limit  [description]
-     * @return [type]  [description]
-     */
+    public function getByName($name)
+    {
+        $this->createQueryBuilder("t")
+            ->where("t.name =:name")
+            ->setParameter("name", $name)
+            ->getQuery()->getResult();
+    }
+
     public function getLinkTags(Link $link, $offset = 0, $limit = 10)
     {
         return $this->getQueryLinkTags($link)
@@ -34,13 +35,6 @@ class TagRepository extends EntityRepository
             ->getQuery()->getSingleScalarResult();
     }
 
-    /**
-     * [findTagsOfUser description]
-     * @param  User    $user   [description]
-     * @param  integer $offset [description]
-     * @param  integer $limit  [description]
-     * @return [type]  [description]
-     */
     public function getUserTags(User $user, $offset = 0, $limit = 10)
     {
         return $this->getQueryUserTags($user)
