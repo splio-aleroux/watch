@@ -18,6 +18,25 @@ class LinkService
      */
     protected $tagRepository;
 
+    /**
+     * @var EntityManager
+     */
+    protected $entityManager;
+
+    public function create(User $user, $url)
+    {
+        $link = new Link();
+        $link->setCreatedAt(new \DateTime());
+        $link->setUrl($url);
+        $user->addLink($link); // one to many
+        $link->setUser($user); // many to one, owner side
+
+        $this->entityManager->persist($link);
+        $this->entityManager->flush();
+
+        return $link;
+    }
+
     public function getTags(Link $link, $offset = 0, $limit = 10)
     {
         $tags = $this->tagRepository->getLinkTags($link, $offset, $limit);
@@ -61,5 +80,10 @@ class LinkService
     public function setTagRepository(TagRepository $repository)
     {
         $this->tagRepository = $repository;
+    }
+
+    public function setEntityManager(EntityManager $em)
+    {
+        $this->entityManager = $em;
     }
 }

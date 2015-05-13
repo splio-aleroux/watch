@@ -53,22 +53,6 @@ class LinkRepository extends EntityRepository
             ;
     }
 
-    private function getQueryTagLinks(Tag $tag)
-    {
-        return $this->createQueryBuilder("l")
-            ->innerJoin("l.tags", "t", "WITH", "t=:tag")
-            ->setParameter("tag", $tag)
-            ;
-    }
-
-    private function getQueryUserLinks(User $user)
-    {
-        return $this->createQueryBuilder("l")
-            ->where("l.user = :user")
-            ->setParameter("user", $user)
-            ;
-    }
-
     public function get($offset = 0, $limit = 10)
     {
         return $this->createQueryBuilder("l")
@@ -83,6 +67,22 @@ class LinkRepository extends EntityRepository
         return $this->createQueryBuilder("l")
             ->select('count(l.id)')
             ->getQuery()->getSingleScalarResult()
+            ;
+    }
+
+    private function getQueryTagLinks(Tag $tag)
+    {
+        return $this->createQueryBuilder("l")
+            ->innerJoin("l.tags", "t", "WITH", "t=:tag")
+            ->setParameter("tag", $tag)
+            ;
+    }
+
+    private function getQueryUserLinks(User $user)
+    {
+        return $this->createQueryBuilder("l")
+            ->where("l.user = :user")
+            ->setParameter("user", $user)
             ;
     }
 }
