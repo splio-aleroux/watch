@@ -67,7 +67,7 @@ class Link implements \Serializable
     {
         throw new \LogicException(sprintf(
             'Unserialization of %s is not supported',
-            self::CLASS
+            get_class($this)
         ));
     }
 
