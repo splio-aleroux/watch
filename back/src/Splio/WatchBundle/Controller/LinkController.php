@@ -24,13 +24,13 @@ class LinkController extends RestController
      */
     public function linksAction($offset = 0, $limit = 10)
     {
-        $data = [
-            // Todo get count of links in service
-            'size' => 123,
-            'data' => []
-        ];
 
         $links = $this->linkService->getLinks($offset, $limit);
+        $data = [
+            // Todo get count of links in service
+            'size' => $this->linkService->count(),
+            'data' => []
+        ];
 
         foreach ($links as $link) {
             $data['data'][] = $this->linkSerializer->serialize($link);
@@ -55,37 +55,7 @@ class LinkController extends RestController
         //                     "statistics" => ["href" => "http://perdu.com"],
         //                 ]
         //             ]
-        //         ],
-        //         [
-        //             "id" => rand(0,time()),
-        //             "url" => "http://google.com",
-        //             "tags" => [
-        //                 "size" => 2,
-        //                 "data" => [
-        //                     ["name" => "php"],
-        //                     ["name" => "rabbitmqueue"]
-        //                 ],
-        //                 "_links" => [
-        //                     "timeline" => ["href" => "http://perdu.com"],
-        //                     "statistics" => ["href" => "http://perdu.com"],
-        //                 ]
-        //             ]
-        //         ],
-        //         [
-        //             "id" => rand(0,time()),
-        //             "url" => "http://bonjourmadame.com",
-        //             "tags" => [
-        //                 "size" => 2,
-        //                 "data" => [
-        //                     ["name" => "auth"],
-        //                     ["name" => "security"]
-        //                 ],
-        //                 "_links" => [
-        //                     "timeline" => ["href" => "http://perdu.com"],
-        //                     "statistics" => ["href" => "http://perdu.com"],
-        //                 ]
-        //             ]
-        //         ],
+        //         ]
         //     ],
         //     "_links" => [
         //         "next" => ["href" => "http://perdu.com"],
