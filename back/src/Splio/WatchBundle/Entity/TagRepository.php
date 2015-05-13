@@ -17,7 +17,8 @@ class TagRepository extends EntityRepository
         $this->createQueryBuilder("t")
             ->where("t.name =:name")
             ->setParameter("name", $name)
-            ->getQuery()->getResult();
+            ->getQuery()->getResult()
+            ;
     }
 
     public function getLinkTags(Link $link, $offset = 0, $limit = 10)
@@ -25,14 +26,16 @@ class TagRepository extends EntityRepository
         return $this->getQueryLinkTags($link)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
-            ->getQuery()->getResult();
+            ->getQuery()->getResult()
+            ;
     }
 
     public function countLinkTags(Link $link)
     {
         return $this->getQueryLinkTags($link)
             ->select('count(t.id)')
-            ->getQuery()->getSingleScalarResult();
+            ->getQuery()->getSingleScalarResult()
+            ;
     }
 
     public function getUserTags(User $user, $offset = 0, $limit = 10)
@@ -40,14 +43,16 @@ class TagRepository extends EntityRepository
         return $this->getQueryUserTags($user)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
-            ->getQuery()->getResult();
+            ->getQuery()->getResult()
+            ;
     }
 
     public function countUserTags(User $user)
     {
         return $this->getQueryUserTags($user)
             ->select('count(t.id)')
-            ->getQuery()->getSingleScalarResult();
+            ->getQuery()->getSingleScalarResult()
+            ;
     }
 
     public function get($offset = 0, $limit = 10)
@@ -55,21 +60,24 @@ class TagRepository extends EntityRepository
         return $this->createQueryBuilder("t")
             ->setFirstResult($offset)
             ->setMaxResults($limit)
-            ->getQuery()->getResult();
+            ->getQuery()->getResult()
+            ;
     }
 
     public function count()
     {
         return $this->createQueryBuilder("t")
             ->select('count(t.id)')
-            ->getQuery()->getSingleScalarResult();
+            ->getQuery()->getSingleScalarResult()
+            ;
     }
 
     private function getQueryLinkTags(Link $link)
     {
         return $this->createQueryBuilder("t")
             ->innerJoin("t.links", "l", "WITH", "l=:link")
-            ->setParameter("link", $link);
+            ->setParameter("link", $link)
+            ;
     }
 
     private function getQueryUserTags(User $user)
@@ -77,6 +85,7 @@ class TagRepository extends EntityRepository
         return $this->createQueryBuilder("t")
             ->innerJoin("t.links", 'l')
             ->innerJoin("l.user", "u", "WITH", "u=:user")
-            ->setParameter("user", $user);
+            ->setParameter("user", $user)
+            ;
     }
 }

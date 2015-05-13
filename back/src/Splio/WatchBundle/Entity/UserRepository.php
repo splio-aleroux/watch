@@ -17,7 +17,8 @@ class UserRepository extends EntityRepository
         return $this->createQueryBuilder("u")
             ->where("u.email =:email")
             ->setParameter("email", $email)
-            ->getQuery()->getResult();
+            ->getQuery()->getResult()
+            ;
     }
 
     public function getBySecretKey($secretKey)
@@ -25,7 +26,8 @@ class UserRepository extends EntityRepository
         return $this->createQueryBuilder("u")
             ->where("u.secretKey =:secretKey")
             ->setParameter("secretKey", $secretKey)
-            ->getQuery()->getResult();
+            ->getQuery()->getResult()
+            ;
     }
 
     public function get($offset = 0, $limit = 10)
@@ -33,13 +35,15 @@ class UserRepository extends EntityRepository
         return $this->createQueryBuilder("u")
             ->setFirstResult($offset)
             ->setMaxResults($limit)
-            ->getQuery()->getResult();
+            ->getQuery()->getResult()
+            ;
     }
 
     public function count()
     {
         return $this->createQueryBuilder("u")
             ->select('count(u.id)')
-            ->getQuery()->getSingleScalarResult();
+            ->getQuery()->getSingleScalarResult()
+            ;
     }
 }

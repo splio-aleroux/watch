@@ -24,14 +24,16 @@ class LinkRepository extends EntityRepository
         return $this->getQueryTagLinks($tag)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
-            ->getQuery()->getResult();
+            ->getQuery()->getResult()
+            ;
     }
 
     public function countTagLinks(Tag $tag)
     {
         return $this->getQueryTagLinks($tag)
             ->select('count(l.id)')
-            ->getQuery()->getSingleScalarResult();
+            ->getQuery()->getSingleScalarResult()
+            ;
     }
 
     public function getUserLinks(User $user, $offset = 0, $limit = 10)
@@ -39,48 +41,48 @@ class LinkRepository extends EntityRepository
         return $this->getQueryUserLinks($user)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
-            ->getQuery()->getResult();
+            ->getQuery()->getResult()
+            ;
     }
 
     public function countUserLinks(User $user)
     {
         return $this->getQueryUserLinks($user)
             ->select('count(l.id)')
-            ->getQuery()->getSingleScalarResult();
+            ->getQuery()->getSingleScalarResult()
+            ;
     }
 
     private function getQueryTagLinks(Tag $tag)
     {
         return $this->createQueryBuilder("l")
             ->innerJoin("l.tags", "t", "WITH", "t=:tag")
-            ->setParameter("tag", $tag);
+            ->setParameter("tag", $tag)
+            ;
     }
 
     private function getQueryUserLinks(User $user)
     {
         return $this->createQueryBuilder("l")
             ->where("l.user = :user")
-            ->setParameter("user", $user);
+            ->setParameter("user", $user)
+            ;
     }
 
-    /**
-     * [findAllLinks description]
-     * @param  integer $offset [description]
-     * @param  integer $limit  [description]
-     * @return [type]  [description]
-     */
     public function get($offset = 0, $limit = 10)
     {
         return $this->createQueryBuilder("l")
             ->setFirstResult($offset)
             ->setMaxResults($limit)
-            ->getQuery()->getResult();
+            ->getQuery()->getResult()
+            ;
     }
 
     public function count()
     {
         return $this->createQueryBuilder("l")
             ->select('count(l.id)')
-            ->getQuery()->getSingleScalarResult();
+            ->getQuery()->getSingleScalarResult()
+            ;
     }
 }
