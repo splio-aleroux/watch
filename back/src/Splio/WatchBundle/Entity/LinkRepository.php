@@ -3,7 +3,6 @@
 namespace Splio\WatchBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Splio\WatchBundle\Entity\Tag;
 
 /**
  * LinkRepository
@@ -18,15 +17,31 @@ class LinkRepository extends EntityRepository
      * @param  Tag     $tag    [description]
      * @param  integer $offset [description]
      * @param  integer $limit  [description]
-     * @return [type]          [description]
+     * @return [type]  [description]
      */
-    public function findLinksOfTag(Tag $tag, $offset = 0, $limit = 10)
+    public function getTagLinks(Tag $tag, $offset = 0, $limit = 10)
     {
         return $this->createQueryBuilder("l")
             ->innerJoin("l.tags", "t", "WITH", "t=:tag")
             ->setParameter("tag", $tag)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
-        ->getQuery()->getResult() ;
+            ->getQuery()->getResult()
+        ;
+    }
+
+    /**
+     * [findAllLinks description]
+     * @param  integer $offset [description]
+     * @param  integer $limit  [description]
+     * @return [type]  [description]
+     */
+    public function get($offset = 0, $limit = 10)
+    {
+        return $this->createQueryBuilder("l")
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()->getResult()
+        ;
     }
 }

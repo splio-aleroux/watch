@@ -2,10 +2,7 @@
 
 namespace Splio\WatchBundle\Service;
 
-use Splio\WatchBundle\Entity\Link;
-use Splio\WatchBundle\Entity\User;
 use Splio\WatchBundle\Entity\Tag;
-use Symfony\Component\HttpFoundation\Response;
 use Splio\WatchBundle\Entity\LinkRepository;
 
 class TagService
@@ -15,9 +12,9 @@ class TagService
      */
     protected $linkRepository;
 
-    public function getLinks(Tag $tag, $offset = 0, $limit= 10)
+    public function getLinks(Tag $tag, $offset = 0, $limit = 10)
     {
-        $links = $this->linkRepository->findLinksOfTag($tag, $offset, $limit);
+        $links = $this->linkRepository->getTagLinks($tag, $offset, $limit);
 
         return $links;
     }

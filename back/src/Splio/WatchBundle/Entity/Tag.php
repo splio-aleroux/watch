@@ -84,7 +84,7 @@ class Tag implements \Serializable
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string $name
      * @return Tag
      */
     public function setName($name)
@@ -107,7 +107,7 @@ class Tag implements \Serializable
     /**
      * Add links
      *
-     * @param \Splio\WatchBundle\Entity\Link $links
+     * @param  \Splio\WatchBundle\Entity\Link $links
      * @return Tag
      */
     public function addLink(\Splio\WatchBundle\Entity\Link $links)
@@ -140,7 +140,7 @@ class Tag implements \Serializable
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param  \DateTime $createdAt
      * @return Tag
      */
     public function setCreatedAt($createdAt)

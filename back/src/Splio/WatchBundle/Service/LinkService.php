@@ -3,26 +3,46 @@
 namespace Splio\WatchBundle\Service;
 
 use Splio\WatchBundle\Entity\Link;
-use Splio\WatchBundle\Entity\User;
-use Splio\WatchBundle\Entity\Tag;
-use Symfony\Component\HttpFoundation\Response;
 use Splio\WatchBundle\Entity\TagRepository;
+use Splio\WatchBundle\Entity\LinkRepository;
 
 class LinkService
 {
+    /**
+     * @var LinkRepository
+     */
+    protected $linkRepository;
+
     /**
      * @var TagRepository
      */
     protected $tagRepository;
 
-
-    public function getTags(Link $link, $offset = 0, $limit= 10)
+    public function getTags(Link $link, $offset = 0, $limit = 10)
     {
-        $tags = $this->tagRepository->findTagsOfLink($link, $offset, $limit);
+        $tags = $this->tagRepository->getLinkTags($link, $offset, $limit);
 
         return $tags;
     }
 
+    public function getLinks($offset = 0, $limit = 10)
+    {
+        $links = $this->linkRepository->get($offset, $limit);
+
+        return $links;
+    }
+
+    public function get($id)
+    {
+        $link = $this->linkRepository->find($id);
+
+        return $link;
+    }
+
+    public function setLinkRepository(LinkRepository $repository)
+    {
+        $this->linkRepository = $repository;
+    }
 
     public function setTagRepository(TagRepository $repository)
     {

@@ -46,7 +46,7 @@ class Link implements \Serializable
      *
      * @ORM\ManyToMany(targetEntity="Tag", mappedBy="links")
      */
-    private $tags;
+    protected $tags;
 
     /**
      * @see \Serializable::serialize
@@ -83,7 +83,7 @@ class Link implements \Serializable
     /**
      * Set user
      *
-     * @param \Splio\WatchBundle\Entity\User $user
+     * @param  \Splio\WatchBundle\Entity\User $user
      * @return Link
      */
     public function setUser(\Splio\WatchBundle\Entity\User $user = null)
@@ -106,7 +106,7 @@ class Link implements \Serializable
     /**
      * Set url
      *
-     * @param string $url
+     * @param  string $url
      * @return Link
      */
     public function setUrl($url)
@@ -136,7 +136,7 @@ class Link implements \Serializable
     /**
      * Add tags
      *
-     * @param \Splio\WatchBundle\Entity\Tag $tags
+     * @param  \Splio\WatchBundle\Entity\Tag $tags
      * @return Link
      */
     public function addTag(\Splio\WatchBundle\Entity\Tag $tags)
@@ -169,7 +169,7 @@ class Link implements \Serializable
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param  \DateTime $createdAt
      * @return Link
      */
     public function setCreatedAt($createdAt)

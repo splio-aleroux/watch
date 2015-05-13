@@ -5,7 +5,6 @@ namespace Splio\WatchBundle\Service;
 use Splio\WatchBundle\Entity\User;
 use Splio\WatchBundle\Entity\LinkRepository;
 use Splio\WatchBundle\Entity\TagRepository;
-use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Orm\EntityManager;
 
 class UserService
@@ -26,12 +25,13 @@ class UserService
     protected $entityManager;
 
     // Create user
-    public function create(array $arguments){
+    public function create(array $arguments)
+    {
         $user = new User();
         $user->setCreatedAt(new \DateTime());
 
         foreach ($arguments as $propertyName => $value) {
-            $method = 'set' . ucfirst($propertyName);
+            $method = 'set'.ucfirst($propertyName);
             $user->$method($value);
         }
 
@@ -46,7 +46,7 @@ class UserService
      * @param  User    $user   [description]
      * @param  integer $offset [description]
      * @param  integer $limit  [description]
-     * @return [type]          [description]
+     * @return [type]  [description]
      */
     public function getLinks(User $user, $offset = 0, $limit = 10)
     {
@@ -56,12 +56,13 @@ class UserService
             $limit,
             $offset
         );
+
         return $links;
     }
 
     public function getTags(User $user, $offset = 0, $limit = 10)
     {
-        $tags = $this->tagRepository->findTagsOfUser($user, $offset, $limit);
+        $tags = $this->tagRepository->getUserTags($user, $offset, $limit);
 
         return $tags;
     }

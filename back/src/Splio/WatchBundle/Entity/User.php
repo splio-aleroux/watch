@@ -132,7 +132,6 @@ class User implements UserInterface, \Serializable
         return ['ROLE_USER'];
     }
 
-
     public function getSalt()
     {
         return 'no-salt';
@@ -161,7 +160,7 @@ class User implements UserInterface, \Serializable
     /**
      * Add followers
      *
-     * @param \Splio\WatchBundle\Entity\User $followers
+     * @param  \Splio\WatchBundle\Entity\User $followers
      * @return User
      */
     public function addFollower(\Splio\WatchBundle\Entity\User $followers)
@@ -194,7 +193,7 @@ class User implements UserInterface, \Serializable
     /**
      * Add followings
      *
-     * @param \Splio\WatchBundle\Entity\User $followings
+     * @param  \Splio\WatchBundle\Entity\User $followings
      * @return User
      */
     public function addFollowing(\Splio\WatchBundle\Entity\User $followings)
@@ -227,7 +226,7 @@ class User implements UserInterface, \Serializable
     /**
      * Set email
      *
-     * @param string $email
+     * @param  string $email
      * @return User
      */
     public function setEmail($email)
@@ -250,7 +249,7 @@ class User implements UserInterface, \Serializable
     /**
      * Set encryptedPassword
      *
-     * @param string $encryptedPassword
+     * @param  string $encryptedPassword
      * @return User
      */
     public function setEncryptedPassword($encryptedPassword)
@@ -270,12 +269,10 @@ class User implements UserInterface, \Serializable
         return $this->encryptedPassword;
     }
 
-
-
     /**
      * Set createdAt
      *
-     * @param \dateTime $createdAt
+     * @param  \dateTime $createdAt
      * @return User
      */
     public function setCreatedAt(\dateTime $createdAt)
@@ -298,7 +295,7 @@ class User implements UserInterface, \Serializable
     /**
      * Set connectedAt
      *
-     * @param \dateTime $connectedAt
+     * @param  \dateTime $connectedAt
      * @return User
      */
     public function setConnectedAt(\dateTime $connectedAt)
@@ -321,7 +318,7 @@ class User implements UserInterface, \Serializable
     /**
      * Set publicKey
      *
-     * @param string $publicKey
+     * @param  string $publicKey
      * @return User
      */
     public function setPublicKey($publicKey)
@@ -344,7 +341,7 @@ class User implements UserInterface, \Serializable
     /**
      * Set secretKey
      *
-     * @param string $secretKey
+     * @param  string $secretKey
      * @return User
      */
     public function setSecretKey($secretKey)
@@ -364,11 +361,10 @@ class User implements UserInterface, \Serializable
         return $this->secretKey;
     }
 
-
     /**
      * Add links
      *
-     * @param \Splio\WatchBundle\Entity\Link $links
+     * @param  \Splio\WatchBundle\Entity\Link $links
      * @return User
      */
     public function addLink(\Splio\WatchBundle\Entity\Link $links)

@@ -3,8 +3,6 @@
 namespace Splio\WatchBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Splio\WatchBundle\Entity\Link;
-use Splio\WatchBundle\Entity\User;
 
 /**
  * TagRepository
@@ -19,16 +17,17 @@ class TagRepository extends EntityRepository
      * @param  Link    $link   [description]
      * @param  integer $offset [description]
      * @param  integer $limit  [description]
-     * @return [type]          [description]
+     * @return [type]  [description]
      */
-    public function findTagsOfLink(Link $link, $offset = 0, $limit = 10)
+    public function getLinkTags(Link $link, $offset = 0, $limit = 10)
     {
         return $this->createQueryBuilder("t")
             ->innerJoin("t.links", "l", "WITH", "l=:link")
             ->setParameter("link", $link)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
-        ->getQuery()->getResult() ;
+            ->getQuery()->getResult()
+        ;
     }
 
     /**
@@ -36,9 +35,9 @@ class TagRepository extends EntityRepository
      * @param  User    $user   [description]
      * @param  integer $offset [description]
      * @param  integer $limit  [description]
-     * @return [type]          [description]
+     * @return [type]  [description]
      */
-    public function findTagsOfUser(User $user, $offset = 0, $limit = 10)
+    public function getUserTags(User $user, $offset = 0, $limit = 10)
     {
         return $this->createQueryBuilder("t")
             ->innerJoin("t.links", 'l')
@@ -46,6 +45,6 @@ class TagRepository extends EntityRepository
             ->setParameter("user", $user)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
-        ->getQuery()->getResult() ;
+        ->getQuery()->getResult();
     }
 }
