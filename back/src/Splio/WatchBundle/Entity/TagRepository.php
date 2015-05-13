@@ -47,4 +47,13 @@ class TagRepository extends EntityRepository
             ->setMaxResults($limit)
             ->getQuery()->getResult();
     }
+
+    public function get($offset = 0, $limit = 10)
+    {
+        return $this->createQueryBuilder("t")
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()->getResult()
+        ;
+    }
 }

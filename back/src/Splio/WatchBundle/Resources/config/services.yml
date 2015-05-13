@@ -26,6 +26,7 @@ services:
         arguments: []
         calls:
             - [setLinkRepository, ["@link_repository"]]
+            - [setTagRepository, ["@tag_repository"]]
 
     link_service:
         alias: splio_watch.link_service
