@@ -11,6 +11,7 @@ use Splio\WatchBundle\Service\LinkService;
  */
 class TagController extends RestController
 {
+    protected $tagSerializer;
     /**
      * @Route(
      *     "/{tagName}/links/"
@@ -65,5 +66,10 @@ class TagController extends RestController
         ];
 
         return $this->renderJson($data);
+    }
+
+    public function setTagSerializer(\Splio\WatchBundle\Serializer\TagSerializer $serializer)
+    {
+        $this->tagSerializer = $serializer;
     }
 }

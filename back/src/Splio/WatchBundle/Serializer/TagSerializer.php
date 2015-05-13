@@ -4,20 +4,26 @@ namespace Splio\WatchBundle\Serializer;
 
 use Splio\RestBundle\Serializer\SerializerInterface;
 use Splio\WatchBundle\Entity\Tag;
+use Splio\WatchBundle\Serializer\LinkSerializer;
 use \Serializable;
 
 class TagSerializer implements SerializerInterface
 {
+	/**
+     * @var LinkSerializer
+     */
+	protected $linkSerializer;
+
 	public function serialize(Serializable $resource)
 	{
 		$this->supports($resource);
+		$serialized = $resource->serialize();
+		$serialized['links'] = [];
+		$links = $resource->getLinks();
 
-		$serialized = array_merge(
-			$resource->serialize(),
-			'_links' => [
-				// Todo prepare links for relations
-			]
-		);
+		foreach ($links as $link) {
+			$serialized['link'][] = $this->linkSerializer->serialize($link);
+		}
 
 		return $serialized;
 	}
@@ -31,5 +37,10 @@ class TagSerializer implements SerializerInterface
                 get_class($resource)
             ));
         }
+	}
+
+	public function setLinkSerializer(LinkSerializer $linkSerializer)
+	{
+		$this->linkSerializer = $linkSerializer;
 	}
 }

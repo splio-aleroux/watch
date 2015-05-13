@@ -79,6 +79,8 @@ services:
     splio_watch.tag_controller:
         class: Splio\WatchBundle\Controller\TagController
         parent: splio_rest.base_controller
+        calls:
+            - [setTagSerializer, ['@splio_watch.tag_serializer']]
 
     splio_watch.security_controller:
         class: Splio\WatchBundle\Controller\SecurityController
@@ -89,3 +91,29 @@ services:
             - [setFrontAppUrl, ['%splio_watch.front_app_url%']]
             - [setGithubAppId, ['%splio_watch.github.application_id%']]
             - [setGithubAppSecret, ['%splio_watch.github.application_secret%']]
+
+    # Serializers
+    splio_watch.link_serializer:
+        class: Splio\WatchBundle\Serializer\LinkSerializer
+        calls:
+            - [setTagSerializer, ['@tag_serializer']]
+            - [setUserSerializer, ['@user_serializer']]
+
+    link_serializer:
+        alias: splio_watch.link_serializer
+
+    splio_watch.tag_serializer:
+        class: Splio\WatchBundle\Serializer\TagSerializer
+        calls:
+            - [setLinkSerializer, ['@link_serializer']]
+
+    tag_serializer:
+        alias: splio_watch.tag_serializer
+
+    splio_watch.user_serializer:
+        class: Splio\WatchBundle\Serializer\UserSerializer
+        calls:
+            - [setLinkSerializer, ['@link_serializer']]
+
+    user_serializer:
+        alias: splio_watch.user_serializer

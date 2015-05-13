@@ -54,8 +54,9 @@ class Link implements \Serializable
     public function serialize()
     {
         return [
-            "id" => $this->getId(),
-            "url" => $this->getUrl()
+            'id' => $this->getId(),
+            'createAt' => $this->getCreatedAt(),
+            'url' => $this->getUrl()
         ];
     }
 

@@ -48,8 +48,9 @@ class Tag implements \Serializable
     public function serialize()
     {
         return [
-            "id" => $this->getId(),
-            "name" => $this->getName()
+            'id' => $this->getId(),
+            'createdAt' => $this->getCreatedAt(),
+            'name' => $this->getName()
         ];
     }
 

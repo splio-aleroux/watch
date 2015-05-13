@@ -8,16 +8,21 @@ use \Serializable;
 
 class UserSerializer implements SerializerInterface
 {
+	/**
+     * @var LinkSerializer
+     */
+	protected $linkSerializer;
+
 	public function serialize(Serializable $resource)
 	{
 		$this->supports($resource);
+		$serialized = $resource->serialize();
+		$serialized['links'] = [];
+		$links = $resource->getLinks();
 
-		$serialized = array_merge(
-			$resource->serialize(),
-			'_links' => [
-				// Todo prepare links for relations
-			]
-		);
+		foreach ($links as $link) {
+			$serialized['link'][] = $this->linkSerializer->serialize($link);
+		}
 
 		return $serialized;
 	}
@@ -31,5 +36,10 @@ class UserSerializer implements SerializerInterface
                 get_class($resource)
             ));
         }
+	}
+
+	public function setLinkSerializer(\Splio\WatchBundle\Serializer\LinkSerializer $serializer)
+	{
+		$this->linkSerializer = $serializer;
 	}
 }
