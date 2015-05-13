@@ -5,6 +5,7 @@ namespace Splio\WatchBundle\Service;
 use Splio\WatchBundle\Entity\User;
 use Splio\WatchBundle\Entity\LinkRepository;
 use Splio\WatchBundle\Entity\TagRepository;
+use Splio\WatchBundle\Entity\UserRepository;
 use Doctrine\Orm\EntityManager;
 
 class UserService
@@ -18,6 +19,11 @@ class UserService
      * @var TagRepository
      */
     protected $tagRepository;
+
+    /**
+     * @var UserRepository
+     */
+    protected $userRepository;
 
     /**
      * @var EntityManager
@@ -37,6 +43,27 @@ class UserService
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+
+        return $user;
+    }
+
+    public function get($id)
+    {
+        $user = $this->userRepository->find($id);
+
+        return $user;
+    }
+
+    public function getByEmail($email)
+    {
+        $user = $this->userRepository->getByEmail($email);
+
+        return $user;
+    }
+
+    public function getBySecretKey($secretKey)
+    {
+        $user = $this->userRepository->getBySecretKey($secretKey);
 
         return $user;
     }
@@ -75,6 +102,11 @@ class UserService
     public function setTagRepository(TagRepository $repository)
     {
         $this->tagRepository = $repository;
+    }
+
+    public function setUserRepository(UserRepository $repository)
+    {
+        $this->userRepository = $repository;
     }
 
     public function setEntityManager(EntityManager $em)

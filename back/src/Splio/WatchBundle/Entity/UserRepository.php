@@ -12,4 +12,19 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
+    public function getByEmail($email)
+    {
+        return $this->createQueryBuilder("u")
+            ->where("u.email =:email")
+            ->setParameter("email", $email)
+            ->getQuery()->getResult();
+    }
+
+    public function getBySecretKey($secretKey)
+    {
+        return $this->createQueryBuilder("u")
+            ->where("u.secretKey =:secretKey")
+            ->setParameter("secretKey", $secretKey)
+            ->getQuery()->getResult();
+    }
 }

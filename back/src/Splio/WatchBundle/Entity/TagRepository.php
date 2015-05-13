@@ -45,6 +45,6 @@ class TagRepository extends EntityRepository
             ->setParameter("user", $user)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
-        ->getQuery()->getResult();
+            ->getQuery()->getResult();
     }
 }
