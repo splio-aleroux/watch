@@ -23,6 +23,8 @@ var AuthenticationService = {
             && null !== queryString.secret
         ) {
             this.saveKeys(queryString.public, queryString.secret);
+
+            window.location.href = window.location.origin
         }
     },
     hasKeys: function() {
