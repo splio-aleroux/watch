@@ -14,9 +14,13 @@ class AppKernel extends Kernel
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
+            // new SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle(),
+            // new SimpleBus\SymfonyBridge\SimpleBusEventBusBundle(),
+            // new SimpleBus\SymfonyBridge\DoctrineOrmBridgeBundle(),
 
             new Splio\RestBundle\SplioRestBundle(),
             new Splio\WatchBundle\SplioWatchBundle(),
