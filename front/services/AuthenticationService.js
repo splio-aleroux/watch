@@ -3,21 +3,27 @@ var _ = require('underscore');
 var assign = require('object-assign');
 var sha1 = require('sha1');
 var base64 = require('base-64');
-var request = require('request');
 var requestService = require('./requestService');
 var qs = require('qs');
 
-var AUTHENTICATION_IDENTIFIER = "/splio-watch-auth";
+var AUTHENTICATION_IDENTIFIER = "splio-watch-auth";
 var AUTHENTICATION_REDIRECT_URL = "/auth/login";
 var AUTHENTICATION_AUTH_URL = "/auth/oauth";
 
-
 var AuthenticationService = {
     keys: {},
+    /**
+     * Initialize the service
+     * @return {void} [init]
+     */
     init: function() {
         this.keys = localStorageService.getValues(AUTHENTICATION_IDENTIFIER);
     },
-    checkRequest: function() {
+    /**
+     * Check if the request contains the auth keys
+     * @return {Boolean} [description]
+     */
+    parseRequest: function() {
         var queryString = qs.parse(window.location.search.substring(1));
         if (
             _.has(queryString, 'public')
@@ -29,7 +35,13 @@ var AuthenticationService = {
 
             window.location.href = window.location.origin
         }
+
+        return false;
     },
+    /**
+     * Is the user authenticated ?
+     * @return {Boolean} [description]
+     */
     isAuthenticated: function() {
         var keys = localStorageService.getValues(AUTHENTICATION_IDENTIFIER);
         return (
@@ -39,7 +51,12 @@ var AuthenticationService = {
             && undefined !== keys.secret
         );
     },
-
+    /**
+     * Save keys in localstorage
+     * @param  {string} public  The public key
+     * @param  {string} secret  The secret key
+     * @return {void}        [description]
+     */
     saveKeys: function(public, secret) {
         this.keys = {
             'public': public,
@@ -48,22 +65,27 @@ var AuthenticationService = {
 
         localStorageService.setValues(AUTHENTICATION_IDENTIFIER, this.keys);
     },
-
-    getKeys: function(public, secret) {
+    /**
+     * Get keys from localstorage
+     * @return {[object]}
+     */
+    getKeys: function() {
         this.keys = localStorageService.getValues(AUTHENTICATION_IDENTIFIER);
 
         return this.keys;
     },
-
-    auth: function() {
-        // If there is no key, redirect to login URL
-        if (!this.isAuthenticated()) {
-            var url = requestService.computeUrl(AUTHENTICATION_REDIRECT_URL);
-
-            window.location = url;
-        }
+    /**
+     * Authenticate with back-end
+     * @return {[type]}
+     */
+    authenticate: function() {
+        var url = requestService.computeUrl(AUTHENTICATION_REDIRECT_URL);
+        window.location = url;
     },
-
+    /**
+     * Compute WSSE key
+     * @return {object}
+     */
     computeWsseKey: function() {
         this.init();
         var createdAt = (new Date()).toString();
@@ -78,7 +100,11 @@ var AuthenticationService = {
             "digest": digest
         }
     },
-
+    /**
+     * Stringify the WSSE key to be passed in request header
+     * @param  {object} wsseKey  The values to stringify
+     * @return {string}          The WSSE phrase
+     */
     stringifyWsseKey: function(wsseKey) {
         var wssePhrase = 'UsernameToken Username="'+this.keys.public+'"';
             wssePhrase += ', PasswordDigest="'+wsseKey.digest+'"';
@@ -87,7 +113,10 @@ var AuthenticationService = {
 
         return wssePhrase;
     },
-
+    /**
+     * Compute and return the stringified WSSE key
+     * @return {string}     The WSSE phrase
+     */
     getWssePhrase: function() {
         return this.stringifyWsseKey(this.computeWsseKey());
     }

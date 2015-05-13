@@ -3,10 +3,13 @@
 var AuthenticationService = require('./services/AuthenticationService');
 if (
     !AuthenticationService.isAuthenticated()
-    && !AuthenticationService.checkRequest()
+    && !AuthenticationService.parseRequest()
 ) {
-    AuthenticationService.auth();
+    AuthenticationService.authenticate();
 } else {
+    var ls = require('./stores/LinkService');
+    ls.getLinks();
+
     var Router = require('react-router');
     var Routes = require('./routes');
     var React = require('react');

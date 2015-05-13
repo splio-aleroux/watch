@@ -12,8 +12,8 @@ var LinkRepository = assign({}, {
         RequestService.requestWsse(options, function(results) {
             links = results;
         });
-
-        console.log(links);
+console.log(links);
+        return links;
     }
 });
 
