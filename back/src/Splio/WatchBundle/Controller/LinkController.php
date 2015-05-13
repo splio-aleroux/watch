@@ -8,7 +8,7 @@ use Splio\WatchBundle\Service\LinkService;
 use Splio\WatchBundle\Serializer\LinkSerializer;
 
 /**
- * @Route("/", service="splio_watch.link_controller")
+ * @Route("/links", service="splio_watch.link_controller")
  */
 class LinkController extends RestController
 {
@@ -17,7 +17,26 @@ class LinkController extends RestController
 
     /**
      * @Route(
-     *     "/links",
+     *     "/{id}",
+     *     name="watch_link",
+     *     requirements={
+     *         "id": "\d+",
+     *         "_method": "GET"
+     *     }
+     * )
+     */
+    public function linkAction($id)
+    {
+
+        $link = $this->linkService->get($id);
+        $data = $this->linkSerializer->serialize($link);
+
+        return $this->renderJson($data);
+    }
+
+    /**
+     * @Route(
+     *     "/",
      *     name="watch_links_default",
      *     condition="request.get('version') == null"
      * )
@@ -27,7 +46,6 @@ class LinkController extends RestController
 
         $links = $this->linkService->getLinks($offset, $limit);
         $data = [
-            // Todo get count of links in service
             'size' => $this->linkService->count(),
             'data' => []
         ];
@@ -57,12 +75,12 @@ class LinkController extends RestController
         //             ]
         //         ]
         //     ],
-        //     "_links" => [
-        //         "next" => ["href" => "http://perdu.com"],
-        //         "previous" => ["href" => "http://perdu.com"],
-        //         "last" => ["href" => "http://perdu.com"],
-        //         "first" => ["href" => "http://perdu.com"],
-        //     ]
+            // "_links" => [
+            //     "next" => ["href" => "http://perdu.com"],
+            //     "previous" => ["href" => "http://perdu.com"],
+            //     "last" => ["href" => "http://perdu.com"],
+            //     "first" => ["href" => "http://perdu.com"],
+            // ]
         // ];
 
         return $this->renderJson($data);

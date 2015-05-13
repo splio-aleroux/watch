@@ -12,6 +12,26 @@ use Splio\WatchBundle\Service\LinkService;
 class TagController extends RestController
 {
     protected $tagSerializer;
+
+    /**
+     * @Route(
+     *     "/{id}",
+     *     name="watch_tag",
+     *     requirements={
+     *         "id": "\d+",
+     *         "_method": "GET"
+     *     }
+     * )
+     */
+    public function tagAction($id)
+    {
+
+        $tag = $this->tagService->get($id);
+        $data = $this->tagSerializer->serialize($tag);
+
+        return $this->renderJson($data);
+    }
+
     /**
      * @Route(
      *     "/{tagName}/links/"
@@ -21,13 +41,12 @@ class TagController extends RestController
      */
     public function linksAction($tagName, $offset = 0, $limit = 10)
     {
-
         $tag = null;
 
         $links = $this->tagService->getLinks($tag, $offset, $limit);
         $data = [
             // Todo get count of links in service
-            'size' => count($links),
+            'size' => $this->tagService->countLinks($tag),
             'data' => []
         ];
 
@@ -65,6 +84,11 @@ class TagController extends RestController
         // ];
 
         return $this->renderJson($data);
+    }
+
+    public function setTagService(\Splio\WatchBundle\Service\TagService $service)
+    {
+        $this->tagService = $service;
     }
 
     public function setTagSerializer(\Splio\WatchBundle\Serializer\TagSerializer $serializer)

@@ -89,6 +89,7 @@ services:
         class: Splio\WatchBundle\Controller\TagController
         parent: splio_rest.base_controller
         calls:
+            - [setTagService, ['@splio_watch.tag_service']]
             - [setTagSerializer, ['@splio_watch.tag_serializer']]
 
     splio_watch.security_controller:
@@ -104,6 +105,7 @@ services:
     # Serializers
     splio_watch.link_serializer:
         class: Splio\WatchBundle\Serializer\LinkSerializer
+        parent: splio_watch.link_base_serializer
         calls:
             - [setTagSerializer, ['@tag_base_serializer']]
             - [setUserSerializer, ['@user_base_serializer']]
@@ -113,12 +115,15 @@ services:
 
     splio_watch.link_base_serializer:
         class: Splio\WatchBundle\Serializer\LinkBaseSerializer
+        calls:
+            - [setRouter, ['@router']]
 
     link_base_serializer:
         alias: splio_watch.link_base_serializer
 
     splio_watch.tag_serializer:
         class: Splio\WatchBundle\Serializer\TagSerializer
+        parent: splio_watch.tag_base_serializer
         calls:
             - [setLinkSerializer, ['@link_base_serializer']]
 
@@ -127,12 +132,15 @@ services:
 
     splio_watch.tag_base_serializer:
         class: Splio\WatchBundle\Serializer\TagBaseSerializer
+        calls:
+            - [setRouter, ['@router']]
 
     tag_base_serializer:
         alias: splio_watch.tag_base_serializer
 
     splio_watch.user_serializer:
         class: Splio\WatchBundle\Serializer\UserSerializer
+        parent: splio_watch.user_base_serializer
         calls:
             - [setLinkSerializer, ['@link_base_serializer']]
 
@@ -141,6 +149,8 @@ services:
 
     splio_watch.user_base_serializer:
         class: Splio\WatchBundle\Serializer\UserBaseSerializer
+        calls:
+            - [setRouter, ['@router']]
 
     user_base_serializer:
         alias: splio_watch.user_base_serializer

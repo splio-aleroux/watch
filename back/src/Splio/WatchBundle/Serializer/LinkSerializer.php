@@ -28,8 +28,14 @@ class LinkSerializer extends LinkBaseSerializer implements SerializerInterface
 		$serialized['tags'] = [];
 		$tags = $resource->getTags();
 
+		$serialized['tags'] = [
+			"data" => [],
+			"size" => count($tags),
+			"_links" => []
+		];
+
 		foreach ($tags as $tag) {
-			$serialized['tags'][] = $this->tagSerializer->serialize($tag);
+			$serialized['tags']['data'][] = $this->tagSerializer->serialize($tag);
 		}
 
 		return $serialized;

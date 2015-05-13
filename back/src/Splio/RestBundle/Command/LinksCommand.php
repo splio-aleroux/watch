@@ -27,6 +27,11 @@ class LinksCommand extends ContainerAwareCommand
                 InputArgument::REQUIRED,
                 'User id?'
             )
+            ->addArgument(
+                'tagId',
+                InputArgument::REQUIRED,
+                'Tag id?'
+            )
         ;
     }
 
@@ -34,15 +39,19 @@ class LinksCommand extends ContainerAwareCommand
     {
         $url = $input->getArgument('url');
         $userId = $input->getArgument('userId');
+        $tagId = $input->getArgument('tagId');
         $userRepository = $this->getContainer()->get('user_repository');
+        $tagRepository = $this->getContainer()->get('tag_repository');
         $em = $this->getContainer()->get('doctrine')->getManager();
 
         $user = $userRepository->find($userId);
+        $tag = $tagRepository->find($tagId);
 
         $link = new Link();
         $link->setCreatedAt(new \DateTime());
         $link->setUrl($url);
         $link->setUser($user);
+        $link->addTag($tag);
         $em->persist($link);
         $em->flush();
 
