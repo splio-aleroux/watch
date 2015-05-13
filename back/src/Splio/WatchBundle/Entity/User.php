@@ -104,7 +104,7 @@ class User implements UserInterface, \Serializable
     /**
      * @see \Serializable::unserialize
      */
-    public function unserialize(array $data)
+    public function unserialize($serialized)
     {
         throw new \LogicException(sprintf(
             'Unserialization of %s is not supported',

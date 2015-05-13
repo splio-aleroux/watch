@@ -56,7 +56,7 @@ class Tag implements \Serializable
     /**
      * @see \Serializable::unserialize
      */
-    public function unserialize(array $data)
+    public function unserialize($serialized)
     {
         throw new \LogicException(sprintf(
             'Unserialization of %s is not supported',
@@ -153,7 +153,7 @@ class Tag implements \Serializable
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
