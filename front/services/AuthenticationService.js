@@ -7,9 +7,9 @@ var request = require('request');
 var requestService = require('./requestService');
 var qs = require('qs');
 
-var AUTHENTICATION_IDENTIFIER = "splio-watch-auth";
-var AUTHENTICATION_REDIRECT_URL = "auth/login";
-var AUTHENTICATION_AUTH_URL = "auth/oauth";
+var AUTHENTICATION_IDENTIFIER = "/splio-watch-auth";
+var AUTHENTICATION_REDIRECT_URL = "/auth/login";
+var AUTHENTICATION_AUTH_URL = "/auth/oauth";
 
 
 var AuthenticationService = {
@@ -61,8 +61,6 @@ var AuthenticationService = {
             var url = requestService.computeUrl(AUTHENTICATION_REDIRECT_URL);
 
             window.location = url;
-
-            // window.location.href = AUTHENTICATION_REDIRECT_URL;
         }
     },
 
