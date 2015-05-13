@@ -7,10 +7,6 @@ if (
 ) {
     AuthenticationService.auth();
 } else {
-
-    var lr = require('./storeRepositories/LinkRepository');
-    lr.getAll();
-
     var Router = require('react-router');
     var Routes = require('./routes');
     var React = require('react');
