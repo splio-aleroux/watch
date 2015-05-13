@@ -22,7 +22,7 @@ class UserSerializer extends UserBaseSerializer implements SerializerInterface
 		$links = $resource->getLinks();
 
 		foreach ($links as $link) {
-			$serialized['link'][] = $this->linkSerializer->serialize($link);
+			$serialized['links'][] = $this->linkSerializer->serialize($link);
 		}
 
 		return $serialized;

@@ -14,6 +14,7 @@ class LinkController extends RestController
 {
     protected $linkService;
     protected $linkSerializer;
+
     /**
      * @Route(
      *     "/links"

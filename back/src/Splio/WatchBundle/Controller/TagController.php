@@ -19,23 +19,21 @@ class TagController extends RestController
      * Resource("splio:watch:link")
      * Type("\Splio\WatchBundle\Type\LinkType")
      */
-    public function linksAction($tagName, $offset = 0, $limit = 0)
+    public function linksAction($tagName, $offset = 0, $limit = 10)
     {
-        // $service = new LinkService();
-        // $serializer = new TagSerializer();
-        // $data = [
-        //     // Todo get count of links in service
-        //     'size' => 123,
-        //     'data' => [],
-        //     // Todo prepare links generation
-        //     'links' => []
-        // ];
+        $data = [
+            // Todo get count of links in service
+            'size' => 123,
+            'data' => []
+        ];
 
-        // $links = $service->all($offset, $limit);
+        $tag = null;
 
-        // foreach ($links as $link) {
-        //     $data['data'][] = $serializer->serialize($link);
-        // }
+        $links = $this->tagService->getLinks($tag, $offset, $limit);
+
+        foreach ($links as $link) {
+            $data['data'][] = $this->linkSerializer->serialize($link);
+        }
 
         $data = [
             "size" => 123,

@@ -55,7 +55,7 @@ class Link implements \Serializable
     {
         return [
             'id' => $this->getId(),
-            'createAt' => $this->getCreatedAt(),
+            'createAt' => $this->getCreatedAt()->format(\DateTime::W3C),
             'url' => $this->getUrl()
         ];
     }

@@ -72,6 +72,10 @@ services:
     splio_watch.user_controller:
         class: Splio\WatchBundle\Controller\UserController
         parent: splio_rest.base_controller
+        calls:
+            - [setUserService, ["@user_service"]]
+            - [setUserSerializer, ["@user_serializer"]]
+            - [setLinkSerializer, ["@link_base_serializer"]]
 
     splio_watch.link_controller:
         class: Splio\WatchBundle\Controller\LinkController

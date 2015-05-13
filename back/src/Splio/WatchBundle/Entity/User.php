@@ -95,7 +95,7 @@ class User implements UserInterface, \Serializable
         return [
             'id' => $this->getId(),
             'email' => $this->getEmail(),
-            'createdAt' => $this->getCreatedAt(),
+            'createAt' => $this->getCreatedAt()->format(\DateTime::W3C),
             'connectedAt' => $this->getConnectedAt(),
             'publicKey' => $this->getPublicKey()
         ];

@@ -7,6 +7,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Splio\RestBundle\Controller\BaseController as RestController;
+use Splio\WatchBundle\Service\UserService;
+use Splio\WatchBundle\Service\LinkService;
+use Splio\WatchBundle\Serializer\UserSerializer;
+use Splio\WatchBundle\Serializer\LinkBaseSerializer;
 use Splio\WatchBundle\Type\UserCreateType;
 
 /**
@@ -57,32 +61,8 @@ class UserController extends RestController
      */
     public function userAction($id)
     {
-        $data = [
-            "id" => rand(0,time()),
-            "nickname" => "jdoe",
-            "email" => "jdoe@gmail.com",
-            "avatar" => "http://lorempixel.com/g/200/200/",
-            "links" => [
-                "size" => 9822,
-                "data" => [],
-                "_links" => [
-                    "next" => ["href" => "http://perdu.com"],
-                    "previous" => ["href" => "http://perdu.com"],
-                    "last" => ["href" => "http://perdu.com"],
-                    "first" => ["href" => "http://perdu.com"],
-                ]
-            ],
-            "tags" => [
-                "size" => 338,
-                "data" => [],
-                "_links" => [
-                    "next" => ["href" => "http://perdu.com"],
-                    "previous" => ["href" => "http://perdu.com"],
-                    "last" => ["href" => "http://perdu.com"],
-                    "first" => ["href" => "http://perdu.com"],
-                ]
-            ]
-        ];
+        $user = $this->userService->get($id);
+        $data = $this->userSerializer->serialize($user);
 
         return $this->renderJson($data);
     }
@@ -97,51 +77,37 @@ class UserController extends RestController
      *     }
      * )
      */
-    public function linksAction($id)
+    public function linksAction($id, $offset = 0, $limit = 10)
     {
+        $user = $this->userService->get($id);
+        $links = $this->userService->getLinks($user, $offset, $limit);
+
         $data = [
-            "size" => 123,
-            "data" => [
-                [
-                    "id" => rand(0,time()),
-                    "url" => "http://perdu.com",
-                    "tags" => [
-                        "size" => 3,
-                        "data" => [
-                            ["name" => "js"],
-                            ["name" => "react"],
-                            ["name" => "flux"],
-                        ],
-                        "_links" => [
-                            "timeline" => ["href" => "http://perdu.com"],
-                            "statistics" => ["href" => "http://perdu.com"],
-                        ]
-                    ]
-                ],
-                [
-                    "id" => rand(0,time()),
-                    "url" => "http://google.com",
-                    "tags" => [
-                        "size" => 2,
-                        "data" => [
-                            ["name" => "php"],
-                            ["name" => "rabbitmqueue"]
-                        ],
-                        "_links" => [
-                            "timeline" => ["href" => "http://perdu.com"],
-                            "statistics" => ["href" => "http://perdu.com"],
-                        ]
-                    ]
-                ]
-            ],
-            "_links" => [
-                "next" => ["href" => "http://perdu.com"],
-                "previous" => ["href" => "http://perdu.com"],
-                "last" => ["href" => "http://perdu.com"],
-                "first" => ["href" => "http://perdu.com"],
-            ]
+            // Todo get count of links in service
+            'size' => count($links),
+            'data' => []
         ];
+
+        foreach ($links as $link) {
+            $data['data'][] = $this->linkSerializer->serialize($link);
+        }
 
         return $this->renderJson($data);
     }
+
+    public function setUserService(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
+    public function setUserSerializer(UserSerializer $userSerializer)
+    {
+        $this->userSerializer = $userSerializer;
+    }
+
+    public function setLinkSerializer(LinkBaseSerializer $linkSerializer)
+    {
+        $this->linkSerializer = $linkSerializer;
+    }
+
 }
