@@ -4,7 +4,8 @@ var LinkListItem = React.createClass({
   render: function() {
     return (
         <li>
-            TEST
+            url: <a href={this.props.url}>{this.props.url}</a><br />
+            created: {this.props.createAt}
         </li>
     );
   }

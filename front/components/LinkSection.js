@@ -1,25 +1,35 @@
 var React = require('react');
 var LinkListItem = require('./LinkListItem');
-// var LinkStore = require('../stores/Link');
-
-function getListLinkItem() {
-	return (
-		<LinkListItem />
-	);
-}
-
+var LinkService = require('../stores/LinkService');
 
 var LinkSection = React.createClass({
-  render: function() {
-  	var test = getListLinkItem();
-    return (
-      <div className="link-section">
-        <ul className="link-list">
-        	{test}
-        </ul>
-      </div>
-    );
-  }
+    getInitialState: function() {
+        return {
+            links: LinkService.getLinks()
+        }
+    },
+    componentDidMount: function() {
+        LinkService.addChangeListener(this._onChange);
+    },
+    componentWillUnmount: function() {
+        LinkService.removeChangeListener(this._onChange);
+    },
+    render: function() {
+        var links = this.state.links.map(function(link) {
+            return ( <LinkListItem url={link.url} createAt={link.createAt} /> );
+        });
+
+        return (
+            <div className="link-section">
+                <ul className="link-list">
+                    {links}
+                </ul>
+            </div>
+        );
+    },
+    _onChange: function() {
+        this.setState(LinkService.getLinks())
+    }
 });
 
 module.exports = LinkSection;
