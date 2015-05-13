@@ -33,7 +33,13 @@ class UserRepository extends EntityRepository
         return $this->createQueryBuilder("u")
             ->setFirstResult($offset)
             ->setMaxResults($limit)
-            ->getQuery()->getResult()
-        ;
+            ->getQuery()->getResult();
+    }
+
+    public function count()
+    {
+        return $this->createQueryBuilder("u")
+            ->select('count(u.id)')
+            ->getQuery()->getSingleScalarResult();
     }
 }

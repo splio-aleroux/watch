@@ -26,8 +26,7 @@ class TagRepository extends EntityRepository
             ->setParameter("link", $link)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
-            ->getQuery()->getResult()
-        ;
+            ->getQuery()->getResult();
     }
 
     /**
@@ -53,7 +52,13 @@ class TagRepository extends EntityRepository
         return $this->createQueryBuilder("t")
             ->setFirstResult($offset)
             ->setMaxResults($limit)
-            ->getQuery()->getResult()
-        ;
+            ->getQuery()->getResult();
+    }
+
+    public function count()
+    {
+        return $this->createQueryBuilder("t")
+            ->select('count(t.id)')
+            ->getQuery()->getSingleScalarResult();
     }
 }

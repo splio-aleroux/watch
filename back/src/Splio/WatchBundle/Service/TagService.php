@@ -39,6 +39,13 @@ class TagService
         return $tag;
     }
 
+    public function count()
+    {
+        $count = $this->tagRepository->count();
+
+        return $count;
+    }
+
     public function setLinkRepository(LinkRepository $repository)
     {
         $this->linkRepository = $repository;

@@ -54,6 +54,13 @@ class UserService
         return $user;
     }
 
+    public function count()
+    {
+        $count = $this->userRepository->count();
+
+        return $count;
+    }
+
     public function getUsers($offset = 0, $limit = 10)
     {
         $users = $this->userRepository->get($offset, $limit);

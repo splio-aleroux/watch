@@ -39,6 +39,13 @@ class LinkService
         return $link;
     }
 
+    public function count()
+    {
+        $count = $this->linkRepository->count();
+
+        return $count;
+    }
+
     public function setLinkRepository(LinkRepository $repository)
     {
         $this->linkRepository = $repository;
