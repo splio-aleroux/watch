@@ -5,8 +5,11 @@ namespace Splio\WatchBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use SimpleBus\Message\Bus\MessageBus;
 
 use Splio\RestBundle\Controller\BaseController as RestController;
+
+use Splio\WatchBundle\Command;
 use Splio\WatchBundle\Service\UserService;
 use Splio\WatchBundle\Service\LinkService;
 use Splio\WatchBundle\Serializer\UserSerializer;
@@ -19,6 +22,11 @@ use Splio\WatchBundle\Type\UserCreateType;
 class UserController extends RestController
 {
     /**
+     * @var CommandBus
+     */
+    protected $commandBus;
+
+    /**
      * @Route(
      *     "/",
      *     name="splio_watch_user_create",
@@ -26,27 +34,27 @@ class UserController extends RestController
      *         "_method": "POST"
      *     }
      * )
-     * Type("Splio\WatchBundle\Type\UserCreateType")
      */
     public function createAction(Request $request)
     {
-        $creation = new UserCreateType();
-        $creation->bind($this->getRequestContent($request));
+        $content = $this->getRequestContent($request);
 
+        // Create the user creation command
+        $command = new Command\UserCreateCommand($content->email);
 
-        $errors = $this->validator->validate($creation);
-        if (0 === $errors->count()) {
-            // call the service
-            return $this->renderJson(1);
-        } else {
-            $results = ["errors" => []];
-            $violations = $errors->getIterator();
-            foreach ($violations as $key => $error) {
-                $results["errors"][$error->getPropertyPath()][] = $error->getMessage();
+        try {
+            // Send the command on the bus
+            $this->commandBus->handle($command);
+
+            // Acknowledge the command execution
+            if ($command->getUser()) {
+                $data = $this->userSerializer->serialize($command->getUser());
+                return $this->renderJson($data, 201);
             }
-
-            return $this->renderJson($results, Response::HTTP_BAD_REQUEST);
+        } catch (\InvalidArgumentException $e) {
+            return $this->renderJson($e->getViolations(), 400);
         }
+
     }
 
     /**
@@ -110,4 +118,8 @@ class UserController extends RestController
         $this->linkSerializer = $linkSerializer;
     }
 
+    public function setCommandBus(MessageBus $bus)
+    {
+        $this->commandBus = $bus;
+    }
 }

@@ -21,7 +21,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "guzzlehttp/guzzle": "~5.0",
         "nelmio/cors-bundle": "^1.4",
-        "simple-bus/symfony-bridge": "^4.0"
+        "simple-bus/symfony-bridge": "^4.0",
+        "simple-bus/doctrine-orm-bridge": "^4.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

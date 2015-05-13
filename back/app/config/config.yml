@@ -43,6 +43,10 @@ assetic:
         #yui_css:
         #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
 
+command_bus:
+    # default value for this key is "class_based"
+    command_name_resolver_strategy: named_message
+
 # Doctrine Configuration
 doctrine:
     dbal:

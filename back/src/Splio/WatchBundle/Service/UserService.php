@@ -2,11 +2,11 @@
 
 namespace Splio\WatchBundle\Service;
 
+use Splio\WatchBundle\Command;
 use Splio\WatchBundle\Entity\User;
 use Splio\WatchBundle\Entity\LinkRepository;
 use Splio\WatchBundle\Entity\TagRepository;
 use Splio\WatchBundle\Entity\UserRepository;
-use Doctrine\Orm\EntityManager;
 
 class UserService
 {
@@ -26,25 +26,17 @@ class UserService
     protected $userRepository;
 
     /**
-     * @var EntityManager
+     * @param  UserCreateCommand $command
+     * @return User     the user
      */
-    protected $entityManager;
-
-    // Create user
-    public function create(array $arguments)
+    public function create(Command\UserCreateCommand $command)
     {
         $user = new User();
         $user->setCreatedAt(new \DateTime());
+        $user->setEmail($command->email);
 
-        foreach ($arguments as $propertyName => $value) {
-            $method = 'set'.ucfirst($propertyName);
-            $user->$method($value);
-        }
-
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-
-        return $user;
+        $this->userRepository->save($user);
+        $command->setUser($user);
     }
 
     public function get($id)
@@ -130,11 +122,6 @@ class UserService
     public function setUserRepository(UserRepository $repository)
     {
         $this->userRepository = $repository;
-    }
-
-    public function setEntityManager(EntityManager $em)
-    {
-        $this->entityManager = $em;
     }
 
     // Delete user

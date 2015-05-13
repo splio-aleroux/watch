@@ -1,7 +1,3 @@
-splio_watch:
-    resource: "@SplioWatchBundle/Resources/config/routing.yml"
-    prefix:   /
-
 splio_watch_controller:
     resource:   "@SplioWatchBundle/Controller"
     type:       annotation

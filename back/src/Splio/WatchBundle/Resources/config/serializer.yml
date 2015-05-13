@@ -1,0 +1,44 @@
+# Serializers
+services:
+    splio_watch.link_serializer:
+        class: Splio\WatchBundle\Serializer\LinkSerializer
+        calls:
+            - [setTagSerializer, ['@tag_base_serializer']]
+            - [setUserSerializer, ['@user_base_serializer']]
+
+    link_serializer:
+        alias: splio_watch.link_serializer
+
+    splio_watch.link_base_serializer:
+        class: Splio\WatchBundle\Serializer\LinkBaseSerializer
+
+    link_base_serializer:
+        alias: splio_watch.link_base_serializer
+
+    splio_watch.tag_serializer:
+        class: Splio\WatchBundle\Serializer\TagSerializer
+        calls:
+            - [setLinkSerializer, ['@link_base_serializer']]
+
+    tag_serializer:
+        alias: splio_watch.tag_serializer
+
+    splio_watch.tag_base_serializer:
+        class: Splio\WatchBundle\Serializer\TagBaseSerializer
+
+    tag_base_serializer:
+        alias: splio_watch.tag_base_serializer
+
+    splio_watch.user_serializer:
+        class: Splio\WatchBundle\Serializer\UserSerializer
+        calls:
+            - [setLinkSerializer, ['@link_base_serializer']]
+
+    user_serializer:
+        alias: splio_watch.user_serializer
+
+    splio_watch.user_base_serializer:
+        class: Splio\WatchBundle\Serializer\UserBaseSerializer
+
+    user_base_serializer:
+        alias: splio_watch.user_base_serializer

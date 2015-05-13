@@ -56,7 +56,6 @@ class SecurityController extends RestController
         // @TODO Check that state is the same as provided earlier
         // @TODO Split into dedicated methods
         $code = $request->query->get('code');
-
         $client = new Client();
 
         $options = [
