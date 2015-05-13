@@ -143,7 +143,7 @@ class Link implements \Serializable
     public function addTag(\Splio\WatchBundle\Entity\Tag $tags)
     {
         $this->tags[] = $tags;
-        $tags->addLink($this); // many to many inversedBy is the owner
+        $tags->addLink($this); // many to many, inversedBy is the owner
 
         return $this;
     }

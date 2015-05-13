@@ -2,6 +2,7 @@
 
 namespace Splio\WatchBundle\Service;
 
+use Doctrine\ORM\EntityManager;
 use Splio\WatchBundle\Entity\Tag;
 use Splio\WatchBundle\Entity\LinkRepository;
 use Splio\WatchBundle\Entity\TagRepository;
@@ -17,6 +18,18 @@ class TagService
      * @var TagRepository
      */
     protected $tagRepository;
+
+    public function create($name)
+    {
+        $tag = new Tag();
+        $tag->setCreatedAt(new \DateTime());
+        $tag->setName($name);
+
+        $this->entityManager->persist($tag);
+        $this->entityManager->flush();
+
+        return $tag;
+    }
 
     public function getByName($name)
     {
@@ -68,5 +81,10 @@ class TagService
     public function setTagRepository(TagRepository $repository)
     {
         $this->tagRepository = $repository;
+    }
+
+    public function setEntityManager(EntityManager $em)
+    {
+        $this->entityManager = $em;
     }
 }
