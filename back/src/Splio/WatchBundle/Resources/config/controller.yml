@@ -28,6 +28,8 @@ services:
         parent: splio_rest.base_controller
         calls:
             - [setTagSerializer, ['@splio_watch.tag_serializer']]
+            - [setTagService, ['@splio_watch.tag_service']]
+            - [setLinkSerializer, ['@splio_watch.link_serializer']]
 
     splio_watch.security_controller:
         class: Splio\WatchBundle\Controller\SecurityController
