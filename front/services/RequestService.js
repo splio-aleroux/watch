@@ -18,6 +18,15 @@ var RequestService = assign({}, {
         });
 
         request(_options, callback);
+    },
+    getWsse: function(options, callback) {
+        var _options = assign({method: "POST"}, options);
+
+        this.requestWsse(_options, callback);
+    },
+    postWsse: function(options, callback) {
+        var _options = assign({method: "POST"}, options)
+        this.requestWsse(_options, callback);
     }
 });
 

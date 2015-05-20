@@ -28,7 +28,7 @@ var TagService = assign({}, EventEmitter.prototype, {
 
 TagService.dispatcherToken = dispatcher.register(function(action) {
     switch(action.type) {
-        case ActionTypes.RECEIVE_LINKS:
+        case ActionTypes.RECEIVE_TAGS:
             action.tags.forEach(function(tag) {
                 tags[tag.id] = tag;
             });

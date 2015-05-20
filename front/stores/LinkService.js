@@ -34,6 +34,9 @@ LinkService.dispatcherToken = dispatcher.register(function(action) {
             });
             LinkService.emitChange();
             break;
+        case ActionTypes.SAVE_LINK:
+            linkRepository.save(action.link);
+            break;
         default:
     }
 })
