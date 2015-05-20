@@ -1,6 +1,6 @@
-var React = require('react');
-var LinkListItem = require('./LinkListItem');
-var LinkService = require('../stores/LinkService');
+import React from 'react';
+import LinkListItem from './LinkListItem'
+import LinkService from '../stores/LinkService';
 
 var LinkSection = React.createClass({
     getInitialState: function() {

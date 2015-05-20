@@ -1,4 +1,5 @@
-var assign = require('object-assign');
+import assign from 'object-assign';
+
 var configuration = assign({}, {
     conf: {
         backEndAddress: 'app.box.local',

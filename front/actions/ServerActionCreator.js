@@ -1,5 +1,5 @@
-var dispatcher = require('../dispatcher');
-var ActionTypes = require('../constants/ActionTypes.js');
+import dispatcher from '../dispatcher';
+import ActionTypes from '../constants/ActionTypes';
 
 module.exports = {
     getLinks: function(links) {

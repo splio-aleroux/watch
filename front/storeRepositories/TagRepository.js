@@ -1,6 +1,7 @@
-var RequestService = require('../services/RequestService');
-var assign = require('object-assign');
-var ServerActionCreator = require('../actions/ServerActionCreator');
+import RequestService from '../services/RequestService';
+import assign from 'object-assign';
+import ServerActionCreator from '../actions/ServerActionCreator';
+
 var TAG_URL = "/tags/";
 
 var TagRepository = assign({}, {

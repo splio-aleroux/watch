@@ -2,16 +2,21 @@
  * Routing directory of spliowatch application
  */
 
-var React = require('react');
-var Router = require('react-router');
+import React from 'react';
+import Router from 'react-router';
+import App from './app.jsx';
+import SplioWatch from './components/SplioWatch';
+import SignIn from './components/SignIn';
+import SignOut from './components/SignOut';
+
 var Route = Router.Route;
 var DefaultRoute = Router.DefaultRoute;
 
 var Routes = (
-    <Route path="/" handler={require('./app.jsx')}>
-        <DefaultRoute handler={require('./components/SplioWatch')} />
-        <Route name="sign-in" path="/signin" handler={require('./components/SignIn')} />
-        <Route name="sign-out" path="/signout" handler={require('./components/SignOut')} />
+    <Route path="/" handler={App}>
+        <DefaultRoute handler={SplioWatch} />
+        <Route name="sign-in" path="/signin" handler={SignIn} />
+        <Route name="sign-out" path="/signout" handler={SignOut} />
     </Route>
 );
 

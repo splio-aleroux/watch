@@ -1,4 +1,4 @@
-var React = require('react');
+import React from'react';
 
 var SignOut = React.createClass({
   render: function() {

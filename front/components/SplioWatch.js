@@ -1,5 +1,5 @@
-var React = require('react');
-var LinkSection = require('./LinkSection');
+import React from 'react';
+import LinkSection from './LinkSection';
 
 var SplioWatch = React.createClass({
     render: function() {

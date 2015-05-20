@@ -1,11 +1,11 @@
-var dispatcher = require('../dispatcher');
-var EventEmitter = require('events').EventEmitter;
-var assign = require('object-assign');
-var linkRepository = require('../storeRepositories/LinkRepository');
-var ActionTypes = require('../constants/ActionTypes');
+import dispatcher from '../dispatcher';
+import events from 'events';
+import assign from 'object-assign';
+import linkRepository from '../storeRepositories/LinkRepository';
+import ActionTypes from '../constants/ActionTypes';
 
+var EventEmitter = events.EventEmitter;
 var CHANGE_EVENT = "change";
-
 var links = [];
 
 var LinkService = assign({}, EventEmitter.prototype, {

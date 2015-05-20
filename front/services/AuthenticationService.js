@@ -1,10 +1,10 @@
-var localStorageService = require('./LocalStorageService');
-var _ = require('underscore');
-var assign = require('object-assign');
-var sha1 = require('sha1');
-var base64 = require('base-64');
-var requestService = require('./requestService');
-var qs = require('qs');
+import localStorageService from './LocalStorageService';
+import _ from 'underscore';
+import assign from 'object-assign';
+import sha1 from 'sha1';
+import base64 from 'base-64';
+import requestService from './requestService';
+import qs from 'qs';
 
 var AUTHENTICATION_IDENTIFIER = "splio-watch-auth";
 var AUTHENTICATION_REDIRECT_URL = "/auth/login";

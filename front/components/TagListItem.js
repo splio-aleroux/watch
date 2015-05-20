@@ -1,4 +1,4 @@
-var React = require('react');
+import React from 'react';
 
 var TagListItem = React.createClass({
   render: function() {

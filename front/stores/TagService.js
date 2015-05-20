@@ -1,11 +1,11 @@
-var dispatcher = require('../dispatcher');
-var EventEmitter = require('events').EventEmitter;
-var assign = require('object-assign');
-var tagRepository = require('../storeRepositories/TagRepository');
-var ActionTypes = require('../constants/ActionTypes');
+import dispatcher from '../dispatcher';
+import events from 'events';
+import assign from 'object-assign';
+import tagRepository from '../storeRepositories/TagRepository';
+import ActionTypes from '../constants/ActionTypes';
 
+var EventEmitter = events.EventEmitter
 var CHANGE_EVENT = "change";
-
 var tags = [];
 
 var TagService = assign({}, EventEmitter.prototype, {

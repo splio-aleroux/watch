@@ -1,6 +1,6 @@
 // Launch authentication
-var LinkRepository = require('./storeRepositories/LinkRepository');
-var AuthenticationService = require('./services/AuthenticationService');
+import LinkRepository from'./storeRepositories/LinkRepository';
+import AuthenticationService from './services/AuthenticationService';
 
 if (!AuthenticationService.isAuthenticated()
     && !AuthenticationService.parseRequest()

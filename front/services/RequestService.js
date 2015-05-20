@@ -1,7 +1,7 @@
-var AuthenticationService = require('./AuthenticationService');
-var request = require('request');
-var assign = require('object-assign');
-var configuration = require('../configuration');
+import AuthenticationService from './AuthenticationService';
+import request from 'request';
+import assign from 'object-assign';
+import configuration from '../configuration';
 
 var RequestService = assign({}, {
     computeUrl: function(uri) {

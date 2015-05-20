@@ -1,5 +1,5 @@
-var React = require('react');
-var TagListItem = require('./TagListItem');
+import React from 'react';
+import TagListItem from './TagListItem';
 
 var LinkListItem = React.createClass({
   render: function() {
