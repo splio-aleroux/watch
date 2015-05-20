@@ -11,7 +11,7 @@ security:
         basic:
             pattern: (/|/auth.*)$
             anonymous: ~
-        wsse_secured:
-            pattern:   /.*
-            stateless: true
-            wsse:      true
+        # wsse_secured:
+        #     pattern:   /.*
+        #     stateless: true
+        #     wsse:      true

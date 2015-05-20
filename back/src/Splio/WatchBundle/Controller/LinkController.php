@@ -73,7 +73,7 @@ class LinkController extends RestController
 
     /**
      * @Route(
-     *     "/",
+     *     "",
      *     name="watch_links_default",
      *     condition="request.get('version') == null"
      * )
