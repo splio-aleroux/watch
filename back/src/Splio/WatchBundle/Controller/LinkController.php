@@ -3,6 +3,8 @@
 namespace Splio\WatchBundle\Controller;
 
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\HttpFoundation\Request;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Splio\RestBundle\Controller\BaseController as RestController;
 use Splio\WatchBundle\Service\LinkService;
