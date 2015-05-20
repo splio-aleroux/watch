@@ -27,11 +27,11 @@ var AuthenticationService = {
         var queryString = qs.parse(window.location.search.substring(1));
         if (
             _.has(queryString, 'public')
-            && null !== queryString.public
+            && null !== queryString['public']
             && _.has(queryString, 'secret')
-            && null !== queryString.secret
+            && null !== queryString['secret']
         ) {
-            this.saveKeys(queryString.public, queryString.secret);
+            this.saveKeys(queryString['public'], queryString['secret']);
 
             window.location.href = window.location.origin
         }
@@ -46,21 +46,21 @@ var AuthenticationService = {
         var keys = localStorageService.getValues(AUTHENTICATION_IDENTIFIER);
         return (
             _.has(keys, 'public')
-            && undefined !== keys.public
+            && undefined !== keys['public']
             && _.has(keys, 'secret')
-            && undefined !== keys.secret
+            && undefined !== keys['secret']
         );
     },
     /**
      * Save keys in localstorage
-     * @param  {string} public  The public key
-     * @param  {string} secret  The secret key
+     * @param  {string} publicKey  The public key
+     * @param  {string} secretKey  The secret key
      * @return {void}        [description]
      */
-    saveKeys: function(public, secret) {
+    saveKeys: function(publicKey, secretKey) {
         this.keys = {
-            'public': public,
-            'secret': secret
+            'public': publicKey,
+            'secret': secretKey
         }
 
         localStorageService.setValues(AUTHENTICATION_IDENTIFIER, this.keys);
@@ -106,7 +106,7 @@ var AuthenticationService = {
      * @return {string}          The WSSE phrase
      */
     stringifyWsseKey: function(wsseKey) {
-        var wssePhrase = 'UsernameToken Username="'+this.keys.public+'"';
+        var wssePhrase = 'UsernameToken Username="'+this.keys['public']+'"';
             wssePhrase += ', PasswordDigest="'+wsseKey.digest+'"';
             wssePhrase += ', Nonce="'+wsseKey.nonce+'"';
             wssePhrase += ', Created="'+wsseKey.createdAt+'"';

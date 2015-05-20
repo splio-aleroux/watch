@@ -5,7 +5,7 @@ var configuration = require('../configuration');
 
 var RequestService = assign({}, {
     computeUrl: function(uri) {
-        url = 'http://'+configuration.get('backEndAddress');
+        var url = 'http://'+configuration.get('backEndAddress');
         url += uri;
 
         return url;

@@ -1,7 +1,7 @@
 var dispatcher = require('../dispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
-var linkRepository = require('../storeRepositories/linkRepository');
+var linkRepository = require('../storeRepositories/LinkRepository');
 var ActionTypes = require('../constants/ActionTypes');
 
 var CHANGE_EVENT = "change";

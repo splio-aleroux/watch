@@ -16,7 +16,7 @@ var LinkSection = React.createClass({
     },
     render: function() {
         var links = this.state.links.map(function(link) {
-            return ( <LinkListItem url={link.url} createAt={link.createAt} /> );
+            return ( <LinkListItem link={link} /> );
         });
 
         return (

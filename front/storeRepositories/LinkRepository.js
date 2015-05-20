@@ -1,7 +1,7 @@
 var RequestService = require('../services/RequestService');
 var assign = require('object-assign');
-var LinkServerActionCreator = require('../actions/LinkServerActionCreator');
-var LINK_URL = "/links";
+var ServerActionCreator = require('../actions/ServerActionCreator');
+var LINK_URL = "/links/";
 
 var LinkRepository = assign({}, {
     getAll: function() {
@@ -12,10 +12,10 @@ var LinkRepository = assign({}, {
         var links = [];
         RequestService.requestWsse(options, function(error, message, response) {
             if (null !== error) {
-                LinkServerActionCreator.dispatchError(error);
+                ServerActionCreator.dispatchError(error);
             }
             links = JSON.parse(response).data;
-            LinkServerActionCreator.getLinks(links);
+            ServerActionCreator.getLinks(links);
         });
 
         return links;
