@@ -73,7 +73,7 @@ class LinkController extends RestController
 
     /**
      * @Route(
-     *     "",
+     *     "/",
      *     name="watch_links_default",
      *     condition="request.get('version') == null"
      * )
@@ -138,7 +138,7 @@ class LinkController extends RestController
         $this->commandBus = $bus;
     }
 
-    public function setSecurityContext(SecurityContext $securityContext)
+    public function setSecurityContext(SecurityContextInterface $securityContext)
     {
         $this->securityContext = $securityContext;
     }
