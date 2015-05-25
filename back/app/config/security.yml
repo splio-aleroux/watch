@@ -8,10 +8,10 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        basic:
-            pattern: (/|/auth.*)$
-            anonymous: ~
         wsse_secured:
             pattern:   /.*
             stateless: true
             wsse:      true
+        basic:
+            pattern: /(auth.*)?$
+            anonymous: ~

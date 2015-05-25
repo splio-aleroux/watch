@@ -10,6 +10,7 @@ use Splio\RestBundle\Controller\BaseController as RestController;
 use Splio\WatchBundle\Service\LinkService;
 use Splio\WatchBundle\Serializer\LinkSerializer;
 use SimpleBus\Message\Bus\MessageBus;
+use Splio\WatchBundle\Command;
 
 /**
  * @Route("/links", service="splio_watch.link_controller")
@@ -34,8 +35,7 @@ class LinkController extends RestController
     {
         $content = $this->getRequestContent($request);
 
-        $userToken = $this->securityContext->getToken()->getUser();
-        $user = $userToken->getUsername();
+        $user = $this->securityContext->getToken()->getUser();
 
         // Create the user creation command
         $command = new Command\LinkCreateCommand($content->url, $user);
@@ -45,10 +45,10 @@ class LinkController extends RestController
             $this->commandBus->handle($command);
 
             // Acknowledge the command execution
-            if ($command->getTag()) {
+            // if ($command->getTag()) {
                 $data = $this->linkSerializer->serialize($command->getLink());
                 return $this->renderJson($data, 201);
-            }
+            // }
         } catch (\InvalidArgumentException $e) {
             return $this->renderJson($e->getViolations(), 400);
         }

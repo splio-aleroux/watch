@@ -19,15 +19,16 @@ class LinkService
      */
     protected $tagRepository;
 
-    public function create(User $user, $url)
+    public function create(\Splio\WatchBundle\Command\LinkCreateCommand $command)
     {
         $link = new Link();
         $link->setCreatedAt(new \DateTime());
-        $link->setUrl($url);
-        $user->addLink($link); // one to many
-        $link->setUser($user); // many to one, owner side
+        $link->setUrl($command->url);
+        $command->user->addLink($link); // one to many
+        $link->setUser($command->user); // many to one, owner side
 
         $this->linkRepository->save($link);
+        $command->setLink($link);
 
         return $link;
     }
