@@ -1,4 +1,4 @@
-import RequestService from '../services/RequestService';
+import RequestService from '../services/WsseRequestService';
 import assign from 'object-assign';
 import ServerActionCreator from '../actions/ServerActionCreator';
 
@@ -11,7 +11,7 @@ var TagRepository = assign({}, {
         };
 
         var tags = [];
-        RequestService.requestWsse(options, function(error, message, response) {
+        RequestService.get(options, function(error, message, response) {
             if (null !== error) {
                 ServerActionCreator.dispatchError(error);
             }

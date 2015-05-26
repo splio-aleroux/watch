@@ -1,4 +1,4 @@
-import RequestService from '../services/RequestService';
+import RequestService from '../services/WsseRequestService';
 import assign from 'object-assign';
 import ServerActionCreator from '../actions/ServerActionCreator';
 
@@ -12,7 +12,7 @@ var LinkRepository = assign({}, {
         };
 
         var links = [];
-        RequestService.requestWsse(options, function(error, message, response) {
+        RequestService.get(options, function(error, message, response) {
             if (null !== error) {
                 ServerActionCreator.dispatchError(error);
             }
@@ -23,12 +23,19 @@ var LinkRepository = assign({}, {
         return links;
     },
     save: function(link) {
+        console.log(link);
         var options = {
-            "url": RequestService.computeUrl(CREATE_LINK_URL)
+            url: RequestService.computeUrl(CREATE_LINK_URL),
+            json: link
         }
 
-        RequestService.postWsse(options, function(error, message, response) {
-
+        RequestService.post(options, function(error, message, response) {
+            if (message.statusCode === 201) {
+                // The link has been created
+                window.location.href = window.location.origin;
+            } else {
+                // Handle error
+            }
         });
     }
 });
