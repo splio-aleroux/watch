@@ -3,7 +3,7 @@ import request from 'request';
 import assign from 'object-assign';
 import configuration from '../configuration';
 
-var RequestService = assign({}, {
+var WsseRequestService = assign({}, {
     computeUrl: function(uri) {
         var url = 'http://'+configuration.get('backEndAddress');
         url += uri;
@@ -37,4 +37,4 @@ var RequestService = assign({}, {
     }
 });
 
-module.exports = RequestService;
+module.exports = WsseRequestService;

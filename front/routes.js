@@ -16,7 +16,6 @@ var DefaultRoute = Router.DefaultRoute;
 var Routes = (
     <Route path="/" handler={App}>
         <DefaultRoute handler={SplioWatch} />
-        <Route name="root" path="/" handler={SplioWatch} />
         <Route name="sign-in" path="/signin" handler={SignIn} />
         <Route name="sign-out" path="/signout" handler={SignOut} />
         <Route name="add" path="/add" handler={AddLink} />

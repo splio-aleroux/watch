@@ -1,9 +1,9 @@
-import localStorageService from './LocalStorageService';
+import StorageService from './SessionStorageService';
 import _ from 'underscore';
 import assign from 'object-assign';
 import sha1 from 'sha1';
 import base64 from 'base-64';
-import requestService from './requestService';
+import configuration from '../configuration';
 import qs from 'qs';
 
 var AUTHENTICATION_IDENTIFIER = "splio-watch-auth";
@@ -17,7 +17,7 @@ var AuthenticationService = {
      * @return {void} [init]
      */
     init: function() {
-        this.keys = localStorageService.getValues(AUTHENTICATION_IDENTIFIER);
+        this.keys = StorageService.getValues(AUTHENTICATION_IDENTIFIER);
     },
     /**
      * Check if the request contains the auth keys
@@ -43,7 +43,7 @@ var AuthenticationService = {
      * @return {Boolean} [description]
      */
     isAuthenticated: function() {
-        var keys = localStorageService.getValues(AUTHENTICATION_IDENTIFIER);
+        var keys = StorageService.getValues(AUTHENTICATION_IDENTIFIER);
         return (
             _.has(keys, 'public')
             && undefined !== keys['public']
@@ -63,14 +63,14 @@ var AuthenticationService = {
             'secret': secretKey
         }
 
-        localStorageService.setValues(AUTHENTICATION_IDENTIFIER, this.keys);
+        StorageService.setValues(AUTHENTICATION_IDENTIFIER, this.keys);
     },
     /**
      * Get keys from localstorage
      * @return {[object]}
      */
     getKeys: function() {
-        this.keys = localStorageService.getValues(AUTHENTICATION_IDENTIFIER);
+        this.keys = StorageService.getValues(AUTHENTICATION_IDENTIFIER);
 
         return this.keys;
     },
@@ -79,7 +79,8 @@ var AuthenticationService = {
      * @return {[type]}
      */
     authenticate: function() {
-        var url = requestService.computeUrl(AUTHENTICATION_REDIRECT_URL);
+        var url = 'http://'+configuration.get('backEndAddress');
+        url += AUTHENTICATION_REDIRECT_URL;
         window.location = url;
     },
     /**
