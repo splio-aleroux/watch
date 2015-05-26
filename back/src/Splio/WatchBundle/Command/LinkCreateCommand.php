@@ -24,12 +24,6 @@ class LinkCreateCommand implements NamedMessage
      */
     protected $link;
 
-    public function __construct($url, User $user)
-    {
-        $this->url = $url;
-        $this->user = $user;
-    }
-
     public function setLink(Link $link)
     {
         if (!$this->link) {

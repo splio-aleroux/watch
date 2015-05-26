@@ -31,9 +31,8 @@ class UserCommand extends ContainerAwareCommand
 
         $user = new User();
 
-        $user->setEmail('aminier@splio.fr');
+        $user->setEmail($email);
         $user->setCreatedAt(new \DateTime(null, new \DateTimeZone('UTC')));
-        $user->setEncryptedPassword('1234');
         $em = $this->getContainer()->get('doctrine')->getManager();
         $em->persist($user);
         $em->flush();

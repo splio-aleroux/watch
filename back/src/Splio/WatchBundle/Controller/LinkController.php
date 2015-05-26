@@ -34,23 +34,21 @@ class LinkController extends RestController
     public function createAction(Request $request)
     {
         $content = $this->getRequestContent($request);
-
         $user = $this->securityContext->getToken()->getUser();
 
         // Create the user creation command
-        $command = new Command\LinkCreateCommand($content->url, $user);
+        $command = new Command\LinkCreateCommand();
+        $command->url = $content->url;
+        $command->user = $user;
 
         try {
             // Send the command on the bus
             $this->commandBus->handle($command);
 
-            // Acknowledge the command execution
-            // if ($command->getTag()) {
-                $data = $this->linkSerializer->serialize($command->getLink());
-                return $this->renderJson($data, 201);
-            // }
+            $data = $this->linkSerializer->serialize($command->getLink());
+            return $this->renderJson($data, 201);
         } catch (\InvalidArgumentException $e) {
-            return $this->renderJson($e->getViolations(), 400);
+            return $this->renderJson('Oops, an error occured' , 400);
         }
     }
 
